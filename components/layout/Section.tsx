@@ -60,12 +60,29 @@ export const Section: React.FC<SectionProps> = ({
     <section
       id={id}
       aria-labelledby={`${id}-heading`}
-      className={`py-16 px-4 border-b border-slate-200 ${bgColor} ${className}`}
+      className={`snap-section min-h-[90vh] lg:min-h-screen flex flex-col justify-center px-4 border-b border-slate-100/70 ${bgColor} ${className}`}
     >
-      <HeadingTag id={`${id}-heading`} className="text-3xl font-bold text-slate-900 mb-4">
-        {heading}
-      </HeadingTag>
-      {children}
+      <div className="w-full max-w-5xl mx-auto flex flex-col gap-8 md:gap-10 lg:gap-12 py-16 md:py-20 lg:py-24">
+        {/*
+          Visual affordances (no animation):
+          - Tall sections keep a calm, one-scene-per-view rhythm (~90-100vh)
+          - Soft accent bar anchors the heading without harsh borders
+          - Consistent vertical padding prevents cramped or floating content
+        */}
+        <span
+          aria-hidden="true"
+          className="block h-1 w-12 rounded-full bg-slate-900/15 dark:bg-white/30"
+        />
+        <HeadingTag
+          id={`${id}-heading`}
+          className="text-3xl md:text-4xl font-semibold tracking-tight leading-tight text-[inherit]"
+        >
+          {heading}
+        </HeadingTag>
+        <div className="flex flex-col gap-6 md:gap-8 lg:gap-10">
+          {children}
+        </div>
+      </div>
     </section>
   );
 };

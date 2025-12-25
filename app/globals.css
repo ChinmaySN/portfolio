@@ -1,1 +1,28 @@
 @import "tailwindcss";
+
+/*
+	Premium scroll experience via CSS Scroll Snap
+	-------------------------------------------------
+	Why CSS Scroll Snap?
+	- Uses native browser scrolling with minimal CSS
+	- Touch and keyboard friendly, no JS scroll hijacking
+	- Keeps scrolling calm and intentional between full-page sections
+
+	We avoid JavaScript scroll listeners or wheel interception to
+	preserve accessibility and platform ergonomics.
+*/
+
+/* Scroll container: full viewport, vertical snap, smooth scroll */
+.snap-container {
+	height: 100vh;               /* One viewport tall */
+	overflow-y: auto;            /* Allow vertical scrolling */
+	scroll-snap-type: y proximity; /* Vertical snapping, guided not forced */
+	scroll-behavior: smooth;     /* Smooth native scrolling */
+}
+
+/* Each major section snaps cleanly to the top of the viewport */
+.snap-section {
+	min-height: 100vh;           /* Roughly one section per viewport */
+	scroll-snap-align: start;    /* Align section to the top when snapping */
+	scroll-snap-stop: normal;    /* Calmer settle; allow natural momentum before snapping */
+}

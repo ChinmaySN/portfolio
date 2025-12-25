@@ -10,43 +10,94 @@ import { certificates } from '@/data/certificates';
 
 export default function Page() {
   return (
-    <main className="w-full">
+    <main className="w-full snap-container h-screen overflow-y-auto">
+      {/*
+        Scroll Snap container
+        - Uses native CSS scroll snapping for a guided, premium feel
+        - No JS listeners or wheel interception to preserve accessibility
+        - Vertical snapping with smooth behavior; one section per viewport
+      */}
       {/* 1. Hero */}
       <Hero />
 
       {/* 2. Featured Projects */}
-      <Section id="featured-projects" heading="Featured Projects" bgColor="bg-slate-50">
+      <Section id="featured-projects" heading="Featured Projects" bgColor="bg-slate-50" className="snap-section">
         <Container>
           {projects.length > 0 ? (
             <ul className="space-y-8">
               {projects.map(project => (
-                <li key={project.id} className="border-l-4 border-slate-300 pl-6">
-                  <h3 className="text-xl font-semibold text-slate-900 mb-2">{project.title}</h3>
-                  <div className="space-y-3 text-slate-600">
-                    <div>
-                      <p className="font-medium text-slate-700">Problem</p>
-                      <p>{project.problem}</p>
-                    </div>
-                    <div>
-                      <p className="font-medium text-slate-700">Approach</p>
-                      <p>{project.approach}</p>
-                    </div>
-                    <div>
-                      <p className="font-medium text-slate-700">Outcome</p>
-                      <p>{project.outcome}</p>
-                    </div>
+                <li
+                  key={project.id}
+                  /*
+                    Subtle affordance only: light lift + shadow on hover/focus to signal interactivity
+                    without flashy motion. No scale/rotation to keep it calm and premium.
+                  */
+                  className="rounded-xl border border-slate-200 bg-white shadow-sm p-6 md:p-8 space-y-4 transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-md hover:bg-slate-50 focus-within:-translate-y-0.5 focus-within:shadow-md focus-within:bg-slate-50"
+                >
+                  <div className="flex flex-col gap-2">
+                    <h3 className="text-2xl font-semibold text-slate-900 leading-tight">{project.title}</h3>
                     {project.tags.length > 0 && (
-                      <div className="flex flex-wrap gap-2 pt-2">
+                      <div className="flex flex-wrap gap-2">
                         {project.tags.map(tag => (
                           <span
                             key={tag}
-                            className="inline-block bg-slate-200 text-slate-700 px-3 py-1 rounded-full text-sm"
+                            className="inline-block bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-xs font-medium"
                           >
                             {tag}
                           </span>
                         ))}
                       </div>
                     )}
+                  </div>
+
+                  <div className="grid gap-4 text-slate-700">
+                    <div>
+                      <p className="text-sm font-semibold text-slate-800">Problem</p>
+                      <p className="text-sm leading-relaxed">{project.problem}</p>
+                    </div>
+                    <div>
+                      <p className="text-sm font-semibold text-slate-800">Approach</p>
+                      <p className="text-sm leading-relaxed">{project.approach}</p>
+                    </div>
+                    <div>
+                      <p className="text-sm font-semibold text-slate-800">Outcome</p>
+                      <p className="text-sm leading-relaxed">{project.outcome}</p>
+                    </div>
+                  </div>
+
+                  <div className="space-y-3">
+                    {/* Proof is static (link or thumbnail) to build credibility without motion. */}
+                    <p className="text-sm font-semibold text-slate-800">Proof</p>
+                    <div className="flex flex-col gap-3">
+                      {project.link ? (
+                        <a
+                          href={project.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-sm font-semibold text-slate-900 underline decoration-2 underline-offset-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-500"
+                        >
+                          View Project
+                        </a>
+                      ) : null}
+
+                      {project.proofImages?.length ? (
+                        <div className="flex flex-wrap gap-3">
+                          {project.proofImages.map((src, idx) => (
+                            <div
+                              key={src}
+                              className="w-28 h-20 rounded-lg overflow-hidden border border-slate-200 bg-slate-50"
+                            >
+                              <img
+                                src={src}
+                                alt={`${project.title} proof ${idx + 1}`}
+                                className="w-full h-full object-cover"
+                                loading="lazy"
+                              />
+                            </div>
+                          ))}
+                        </div>
+                      ) : null}
+                    </div>
                   </div>
                 </li>
               ))}
@@ -56,14 +107,14 @@ export default function Page() {
       </Section>
 
       {/* 3. Process / How I Think */}
-      <Section id="process" heading="Process / How I Think" bgColor="bg-white">
+      <Section id="process" heading="Process / How I Think" bgColor="bg-white" className="snap-section">
         <Container>
           <p className="text-slate-500">Coming soon</p>
         </Container>
       </Section>
 
       {/* 4. Skills */}
-      <Section id="skills" heading="Skills" bgColor="bg-slate-50">
+      <Section id="skills" heading="Skills" bgColor="bg-slate-50" className="snap-section">
         <Container>
           {skills.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -97,7 +148,7 @@ export default function Page() {
       </Section>
 
       {/* 5. Exploring Right Now */}
-      <Section id="exploring" heading="Exploring Right Now" bgColor="bg-white">
+      <Section id="exploring" heading="Exploring Right Now" bgColor="bg-white" className="snap-section">
         <Container>
           {exploring.length > 0 ? (
             <ul className="space-y-4">
@@ -115,7 +166,7 @@ export default function Page() {
       </Section>
 
       {/* 6. Education */}
-      <Section id="education" heading="Education" bgColor="bg-slate-50">
+      <Section id="education" heading="Education" bgColor="bg-slate-50" className="snap-section">
         <Container>
           {education.length > 0 ? (
             <ul className="space-y-6">
@@ -136,7 +187,7 @@ export default function Page() {
       </Section>
 
       {/* 6b. Certificates */}
-      <Section id="certificates" heading="Certificates" bgColor="bg-white">
+      <Section id="certificates" heading="Certificates" bgColor="bg-white" className="snap-section">
         <Container>
           {certificates.length > 0 ? (
             <ul className="space-y-4">
@@ -169,21 +220,21 @@ export default function Page() {
       </Section>
 
       {/* 7. Call to Action */}
-      <Section id="call-to-action" heading="Let's Work Together" bgColor="bg-slate-900 text-white">
+      <Section id="call-to-action" heading="Let's Work Together" bgColor="bg-slate-900 text-white" className="snap-section">
         <Container>
           <p className="text-slate-300">Coming soon</p>
         </Container>
       </Section>
 
       {/* 8. Contact / Links */}
-      <Section id="contact" heading="Contact & Links" bgColor="bg-white">
+      <Section id="contact" heading="Contact & Links" bgColor="bg-white" className="snap-section">
         <Container>
           <p className="text-slate-500">Coming soon</p>
         </Container>
       </Section>
 
       {/* 9. Resume Download */}
-      <Section id="resume" heading="Resume Download" bgColor="bg-slate-50">
+      <Section id="resume" heading="Resume Download" bgColor="bg-slate-50" className="snap-section">
         <Container>
           <p className="text-slate-500">Coming soon</p>
         </Container>

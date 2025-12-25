@@ -5,6 +5,10 @@ import { motion } from 'framer-motion';
 import { Container } from '@/components/layout/Container';
 import { useScrollProgress } from '@/hooks/useScrollProgress';
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
+import { TypewriterEffectSmooth } from '@/components/ui/typewriter-effect';
+import { ParticleButton } from '@/components/ui/particle-button';
+import { ScrollIndicator } from '@/components/ui/ScrollIndicator';
+import { MagneticImage } from '@/components/ui/morphing-cursor';
 
 /**
  * Hero component: establishes identity and tone with scroll-based parallax.
@@ -52,7 +56,7 @@ export const Hero: React.FC = () => {
     <section
       id="hero"
       aria-labelledby="hero-heading"
-      className="py-20 px-4 bg-gradient-to-b from-slate-50 to-white border-b border-slate-200"
+      className="relative snap-section min-h-[90vh] lg:min-h-screen py-20 md:py-24 px-4 bg-gradient-to-b from-slate-50 to-white border-b border-slate-200"
     >
       <Container>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
@@ -65,77 +69,87 @@ export const Hero: React.FC = () => {
               >
                 Chinmay S N
               </h1>
-              <p className="text-xl text-slate-600 mt-4">
-                Building intelligent systems and scalable web solutions.
-              </p>
+              {/* Copy focuses on reliable systems across data, trading, and web without buzzwords. */}
+              <TypewriterEffectSmooth
+                words={[
+                  { text: 'Engineering', className: '!text-slate-900 !font-semibold' },
+                  { text: 'reliable', className: '!text-slate-900 !font-semibold' },
+                  { text: 'systems', className: '!text-slate-900 !font-semibold' },
+                  { text: 'across', className: '!text-slate-900 !font-semibold' },
+                  { text: 'data,', className: '!text-slate-900 !font-semibold' },
+                  { text: 'trading,', className: '!text-slate-900 !font-semibold' },
+                  { text: 'and', className: '!text-slate-900 !font-semibold' },
+                  { text: 'the', className: '!text-slate-900 !font-semibold' },
+                  { text: 'web.', className: '!text-slate-900 !font-semibold' },
+                ]}
+                className="!flex !space-x-0 !my-0 text-base sm:text-lg md:text-lg !pb-0 !text-slate-900"
+                cursorClassName="bg-slate-900 !h-3 sm:!h-5 xl:!h-8"
+              />
             </div>
 
             {/* Description paragraph */}
             <p className="text-lg text-slate-600 max-w-md">
-              I specialize in machine learning, algorithmic trading, and full-stack web development.
-              Passionate about solving complex problems with clean code and data-driven decisions.
+              I work on machine learning, trading systems, and full-stack web products.
+              My approach is structured, data-first, and aimed at shipping dependable, maintainable results.
             </p>
 
-            {/* CTA buttons */}
+            {/* CTA buttons: ParticleButton components with click animation effects */}
             <div className="pt-4 flex gap-4">
-              <a
-                href="#featured-projects"
-                className="inline-block px-6 py-3 bg-slate-900 text-white font-medium rounded-lg hover:bg-slate-800 transition-colors"
+              <ParticleButton
+                onClick={() => {
+                  setTimeout(() => {
+                    document.getElementById('featured-projects')?.scrollIntoView({ behavior: 'smooth' });
+                  }, 1000);
+                }}
+                className="px-6 py-3 bg-slate-900 text-white font-medium rounded-lg shadow-md hover:shadow-lg hover:bg-slate-800 focus:ring-2 focus:ring-slate-500 focus:ring-offset-2"
+                successDuration={800}
               >
-                View My Work
-              </a>
-              <a
-                href="#contact"
-                className="inline-block px-6 py-3 border border-slate-300 text-slate-900 font-medium rounded-lg hover:bg-slate-50 transition-colors"
+                View Projects
+              </ParticleButton>
+              <ParticleButton
+                onClick={() => {
+                  setTimeout(() => {
+                    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+                  }, 1000);
+                }}
+                variant="outline"
+                className="px-6 py-3 border border-slate-300 text-slate-900 font-medium rounded-lg shadow-sm hover:shadow-md hover:bg-slate-50 hover:border-slate-400 focus:ring-2 focus:ring-slate-400 focus:ring-offset-2"
+                successDuration={800}
               >
-                Get In Touch
-              </a>
+                Contact
+              </ParticleButton>
             </div>
           </div>
 
-          {/* Right column: parallax illustration */}
-          <div className="flex items-center justify-center overflow-hidden">
-            {/* 
-              Layered illustration with parallax effect.
-              Each layer moves independently based on scroll progress.
-              Disabled if user has prefers-reduced-motion enabled.
+          {/* Right column: photo with magnetic morphing cursor effect */}
+          <div className="flex items-center justify-center">
+            {/*
+              Photo + magnetic cursor effect:
+              - Base layer: myphoto.jpg visible by default
+              - Hover: circular mask follows cursor revealing matrix.png
+              - Smooth animation via RAF for buttery 60fps tracking
+              - Desktop only, respects pointer capabilities
             */}
-            <div className="relative w-full aspect-square">
-              {/* Background layer: slowest movement (depth cue) */}
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-br from-slate-200 to-slate-300 rounded-2xl"
-                style={{
-                  y: prefersReducedMotion ? 0 : backgroundOffset,
-                }}
+            <div className="relative w-full aspect-square rounded-2xl overflow-hidden bg-gradient-to-br from-slate-200 to-slate-300 p-8">
+              <MagneticImage
+                baseImage="/certificates/illustration/myphoto.jpg"
+                hoverImage="/certificates/illustration/matrix.jpeg"
+                alt="Chinmay S N - Software Engineer"
+                circleSize={250}
               />
-
-              {/* Midground layer: medium movement */}
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-tr from-slate-300 to-slate-400 rounded-2xl opacity-60"
-                style={{
-                  y: prefersReducedMotion ? 0 : midgroundOffset,
-                }}
-              />
-
-              {/* Foreground layer: fastest movement (brings detail closer) */}
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-b from-slate-400 to-slate-500 rounded-2xl opacity-40"
-                style={{
-                  y: prefersReducedMotion ? 0 : foregroundOffset,
-                }}
-              />
-
-              {/* Center content: illustration placeholder */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="text-center text-slate-50">
-                  <p className="text-6xl mb-2">🎨</p>
-                  <p className="text-sm font-medium">Illustration / Avatar</p>
-                </div>
-              </div>
             </div>
           </div>
         </div>
       </Container>
+
+      {/* Decorative scroll affordance: minimal, static indicator to hint more content below without motion. */}
+      <ScrollIndicator />
+
+      {/* Subtle easter egg: low-contrast diamond that gently brightens on hover; decorative only. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-auto absolute bottom-10 right-10 h-3 w-3 rotate-45 bg-slate-300/50 border border-slate-400/50 shadow-sm transition-all duration-500 ease-out hover:opacity-80 hover:-translate-y-0.5"
+      />
     </section>
   );
 };

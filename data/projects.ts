@@ -10,75 +10,56 @@ export interface Project {
   approach: string;
   outcome: string;
   tags: string[];
+  /** Optional live link for external proof. */
+  link?: string;
+  /** Optional list of proof images served from /public for credibility. */
+  proofImages?: string[];
 }
 
 export const projects: Project[] = [
   {
-    id: 'breast-cancer-cnn',
-    title: 'Breast Cancer Classification using CNN',
+    id: 'breast-cancer-webapp',
+    title: 'Breast Cancer Detection Web App',
     problem:
-      'Manual examination of histopathology images is time-consuming and prone to human error, especially when identifying early-stage breast cancer.',
+      'Clinicians need quick, reliable support to flag potential breast cancer cases from image inputs without heavy local compute.',
     approach:
-      'Built a Convolutional Neural Network (CNN) to classify breast cancer histology images as benign or malignant. Used the IDC_regular_ps50_idx5 dataset, organized by patient folders with labeled classes. Handled preprocessing, normalization, train–test split, and model evaluation using accuracy and loss metrics.',
+      'Built an end-to-end ML + web app that serves a trained model for classifying breast cancer images. Implemented clean upload flow, server-side inference, and clear result messaging.',
     outcome:
-      'Achieved strong classification accuracy and a reliable model capable of automatically detecting cancerous patterns from medical images. Strengthened understanding of deep learning, image-based classification, and real-world ML pipelines.',
-    tags: ['Python', 'CNN', 'Deep Learning', 'TensorFlow', 'Keras', 'scikit-learn'],
+      'Deployed a usable web experience that demonstrates the model in a real setting and validates the workflow for clinical decision support.',
+    tags: ['ML', 'Web App', 'Python', 'React', 'Deployment'],
+    link: 'https://cancer-detection-webapp.onrender.com/',
   },
   {
-    id: 'insurance-prediction',
-    title: 'Customer Insurance Purchase Prediction',
-    problem:
-      'Insurance companies struggle to identify which customers are most likely to purchase insurance, leading to inefficient marketing efforts.',
+    id: 'insurance-site',
+    title: 'Insurance Website',
+    problem: 'Prospective customers need to explore plans and request quotes without friction.',
     approach:
-      'Performed exploratory data analysis and built multiple classification models to predict insurance purchase behavior. Compared algorithms such as Logistic Regression, Decision Trees, and other classifiers to evaluate performance and suitability.',
+      'Built a responsive marketing site with clear plan highlights, quote request entry points, and trust-building layout choices. Kept navigation and CTAs straightforward for conversions.',
     outcome:
-      'Developed a comparative analysis highlighting the most effective model for prediction. Demonstrated how data-driven decisions can improve customer targeting and conversion rates.',
-    tags: [
-      'Python',
-      'Machine Learning',
-      'Classification',
-      'Pandas',
-      'Scikit-learn',
-      'Data Analysis',
-    ],
+      'Live site that demonstrates the offering and collects leads reliably, showcasing full-stack delivery capability.',
+    tags: ['Next.js', 'Tailwind', 'Frontend'],
+    link: 'https://insurance-website-two.vercel.app/',
   },
   {
-    id: 'trading-strategies',
-    title: 'Algorithmic Trading Strategies on TradingView',
-    problem:
-      'Retail traders often rely on emotional decision-making and inconsistent rule-based trading.',
+    id: 'algo-trading-proof',
+    title: 'Algorithmic Trading Strategies',
+    problem: 'Retail traders need systematic entries/exits validated against market data instead of ad-hoc decisions.',
     approach:
-      'Designed and implemented 50+ trading strategies using Pine Script on TradingView. Strategies include rule-based entries, exits, stop-losses, trailing stops, Gann levels, and multi-condition logic. Focused on flexibility, parameterization, and backtesting for real-market scenarios.',
+      'Designed and tested rule-based TradingView strategies with disciplined entries, exits, and risk controls. Documented results with chart evidence to show robustness.',
     outcome:
-      'Created a reusable strategy library that supports systematic trading and backtesting. Significantly improved skills in market logic, scripting, and strategy optimization.',
-    tags: [
-      'Pine Script',
-      'TradingView',
-      'Algorithmic Trading',
-      'Technical Analysis',
-      'Backtesting',
-    ],
+      'Library of validated strategies with proof visuals that demonstrate discipline and repeatability for traders.',
+    tags: ['TradingView', 'Pine Script', 'Backtesting'],
+    proofImages: ['/algo1.jpg', '/algo2.jpg'],
   },
   {
-    id: 'aarambhgann-website',
-    title: 'AarambhGann.com – Client Website with Automation & WhatsApp Integration',
-    problem:
-      'Client needed a professional public-facing website to promote courses, collect user details, and handle monthly content updates, while keeping user communication fast and frictionless.',
+    id: 'aarambh-gann',
+    title: 'Aarambh Gann',
+    problem: 'Traders need a reliable Gann-based system with accessible guidance and updates.',
     approach:
-      'Built the website end-to-end covering frontend, backend, and integrations. Implemented user registration forms, WhatsApp API integration for instant communication, and map integration for location clarity. Set up n8n automation to update monthly transit-related content automatically.',
+      'Delivered a production site explaining the Gann-based offering, with clear structure for resources and client-facing updates.',
     outcome:
-      "Delivered a fully functional live website acting as the client's primary online presence. Enabled seamless user registration, faster user communication via WhatsApp, and automated monthly updates. Solution improved operational efficiency while providing a scalable foundation for future features.",
-    tags: [
-      'Web Development',
-      'HTML',
-      'CSS',
-      'JavaScript',
-      'Backend',
-      'Database',
-      'n8n',
-      'Automation',
-      'WhatsApp API',
-      'Map Integration',
-    ],
+      'Live website that anchors the brand online and provides immediate credibility for the trading system.',
+    tags: ['Web', 'Trading', 'Production'],
+    link: 'https://aarambhgann.com/',
   },
 ];
