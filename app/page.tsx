@@ -1,6 +1,7 @@
 import React from 'react';
 import { Section } from '@/components/layout/Section';
 import { Container } from '@/components/layout/Container';
+import { Hero } from '@/components/hero/Hero';
 import { projects } from '@/data/projects';
 import { skills } from '@/data/skills';
 import { exploring } from '@/data/exploring';
@@ -11,19 +12,7 @@ export default function Page() {
   return (
     <main className="w-full">
       {/* 1. Hero */}
-      <Section
-        id="hero"
-        heading="Hello, I'm [Your Name]"
-        headingLevel="h1"
-        bgColor="bg-gradient-to-b from-slate-50 to-white"
-      >
-        <Container>
-          <p className="text-lg text-slate-600 mb-4">
-            Welcome to my portfolio. I build things on the web.
-          </p>
-          <p className="text-slate-500">Coming soon</p>
-        </Container>
-      </Section>
+      <Hero />
 
       {/* 2. Featured Projects */}
       <Section id="featured-projects" heading="Featured Projects" bgColor="bg-slate-50">
