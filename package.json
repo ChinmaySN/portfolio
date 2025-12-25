@@ -1,6 +1,9 @@
 {
   "name": "my-portfolio",
   "version": "0.1.0",
+  "engines": {
+    "node": ">=20 <21"
+  },
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -18,17 +21,17 @@
     "react-dom": "18.2.0"
   },
   "devDependencies": {
-    "typescript": "^5.4.0",
-    "@types/react": "^18.2.0",
     "@types/node": "^20.0.0",
+    "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
+    "@typescript-eslint/eslint-plugin": "^6.7.0",
+    "@typescript-eslint/parser": "^6.7.0",
     "eslint": "^8.43.0",
     "eslint-config-next": "^13.4.7",
-    "@typescript-eslint/parser": "^6.7.0",
-    "@typescript-eslint/eslint-plugin": "^6.7.0",
-    "eslint-plugin-jsx-a11y": "^6.7.1",
     "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-jsx-a11y": "^6.7.1",
     "eslint-plugin-prettier": "^5.1.0",
-    "prettier": "^3.6.0"
+    "prettier": "^3.6.0",
+    "typescript": "^5.3.3"
   }
 }
