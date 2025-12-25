@@ -1,8 +1,10 @@
-'use client';
-
 import React from 'react';
 import { Section } from '@/components/layout/Section';
 import { Container } from '@/components/layout/Container';
+import { projects } from '@/data/projects';
+import { skills } from '@/data/skills';
+import { exploring } from '@/data/exploring';
+import { education } from '@/data/education';
 
 export default function Page() {
   return (
@@ -25,7 +27,41 @@ export default function Page() {
       {/* 2. Featured Projects */}
       <Section id="featured-projects" heading="Featured Projects" bgColor="bg-slate-50">
         <Container>
-          <p className="text-slate-500">Coming soon</p>
+          {projects.length > 0 ? (
+            <ul className="space-y-8">
+              {projects.map(project => (
+                <li key={project.id} className="border-l-4 border-slate-300 pl-6">
+                  <h3 className="text-xl font-semibold text-slate-900 mb-2">{project.title}</h3>
+                  <div className="space-y-3 text-slate-600">
+                    <div>
+                      <p className="font-medium text-slate-700">Problem</p>
+                      <p>{project.problem}</p>
+                    </div>
+                    <div>
+                      <p className="font-medium text-slate-700">Approach</p>
+                      <p>{project.approach}</p>
+                    </div>
+                    <div>
+                      <p className="font-medium text-slate-700">Outcome</p>
+                      <p>{project.outcome}</p>
+                    </div>
+                    {project.tags.length > 0 && (
+                      <div className="flex flex-wrap gap-2 pt-2">
+                        {project.tags.map(tag => (
+                          <span
+                            key={tag}
+                            className="inline-block bg-slate-200 text-slate-700 px-3 py-1 rounded-full text-sm"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </li>
+              ))}
+            </ul>
+          ) : null}
         </Container>
       </Section>
 
@@ -39,21 +75,73 @@ export default function Page() {
       {/* 4. Skills */}
       <Section id="skills" heading="Skills" bgColor="bg-slate-50">
         <Container>
-          <p className="text-slate-500">Coming soon</p>
+          {skills.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {skills.map(skillGroup => (
+                <div key={skillGroup.category}>
+                  <h3 className="text-lg font-semibold text-slate-900 mb-4">
+                    {skillGroup.category}
+                  </h3>
+                  <ul className="space-y-2">
+                    {skillGroup.items.map(item => (
+                      <li key={item.name} className="flex items-center gap-2">
+                        <span
+                          className={`inline-block h-2 w-2 rounded-full ${
+                            item.proficiency === 'expert'
+                              ? 'bg-slate-900'
+                              : item.proficiency === 'proficient'
+                                ? 'bg-slate-600'
+                                : 'bg-slate-400'
+                          }`}
+                        />
+                        <span className="text-slate-700">{item.name}</span>
+                        <span className="text-xs text-slate-500 ml-auto">{item.proficiency}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          ) : null}
         </Container>
       </Section>
 
       {/* 5. Exploring Right Now */}
       <Section id="exploring" heading="Exploring Right Now" bgColor="bg-white">
         <Container>
-          <p className="text-slate-500">Coming soon</p>
+          {exploring.length > 0 ? (
+            <ul className="space-y-4">
+              {exploring.map(item => (
+                <li key={item.label} className="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                  <p className="font-semibold text-slate-900">{item.label}</p>
+                  {item.description && (
+                    <p className="text-slate-600 text-sm mt-1">{item.description}</p>
+                  )}
+                </li>
+              ))}
+            </ul>
+          ) : null}
         </Container>
       </Section>
 
       {/* 6. Education */}
       <Section id="education" heading="Education" bgColor="bg-slate-50">
         <Container>
-          <p className="text-slate-500">Coming soon</p>
+          {education.length > 0 ? (
+            <ul className="space-y-6">
+              {education.map(edu => (
+                <li
+                  key={`${edu.institution}-${edu.year}`}
+                  className="border-l-4 border-slate-300 pl-6"
+                >
+                  <p className="text-sm text-slate-500 font-medium">{edu.year}</p>
+                  <h3 className="text-lg font-semibold text-slate-900">{edu.degree}</h3>
+                  <p className="text-slate-600">{edu.institution}</p>
+                  {edu.field && <p className="text-slate-500 text-sm mt-1">Field: {edu.field}</p>}
+                </li>
+              ))}
+            </ul>
+          ) : null}
         </Container>
       </Section>
 
