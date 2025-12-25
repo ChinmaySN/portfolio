@@ -19,7 +19,7 @@ export const certificates: Certificate[] = [
   {
     title: 'Full Stack Web Development',
     issuer: 'IntrnForte',
-    year: 2024,
+    year: 2025,
     certificateUrl: '/certificates/Full_Stack_Web_Development-Chinmay_S_Neelagiri.pdf',
   },
 ];
