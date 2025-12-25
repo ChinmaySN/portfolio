@@ -23,5 +23,9 @@ interface ContainerProps {
  * Future: Can be extended to support different sizes (sm, md, lg) via props.
  */
 export const Container: React.FC<ContainerProps> = ({ className = '', children }) => {
-  return <div className={`max-w-4xl mx-auto px-6 ${className}`}>{children}</div>;
+  return (
+    <div className={`mx-auto w-full max-w-6xl px-6 ${className}`}>
+      {children}
+    </div>
+  );
 };
