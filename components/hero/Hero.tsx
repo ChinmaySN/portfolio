@@ -1,27 +1,53 @@
+'use client';
+
 import React from 'react';
+import { motion } from 'framer-motion';
 import { Container } from '@/components/layout/Container';
+import { useScrollProgress } from '@/hooks/useScrollProgress';
+import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
 
 /**
- * Hero component: establishes identity and tone.
+ * Hero component: establishes identity and tone with scroll-based parallax.
  *
  * Structure:
  * - Two-column layout (desktop): text left, illustration right
  * - Single column (mobile): text stacked above illustration
  * - h1 heading for SEO and accessibility
- * - Optional description below name
+ * - Layered illustration with parallax motion
  *
- * Why this structure?
- * - Clear visual hierarchy: name → description → CTA (when added)
- * - Scalable: easy to add buttons, links, or animated elements later
- * - Accessible: h1 landmark, semantic HTML, readable without CSS
+ * Motion strategy:
+ * - Illustration divided into 3 layers (background, midground, foreground)
+ * - Each layer moves at different speed based on scroll progress
+ * - Parallax depth: foreground moves most, background moves least
+ * - Motion is subtle (max ±40px vertical offset) to avoid discomfort
+ * - Respects prefers-reduced-motion: no animation if enabled
  *
- * Future animation support:
- * - Each column (text, illustration) can be individually animated
- * - The illustration div is ready for parallax, fade-in, or scale effects
- * - Stagger effect possible: text in first, illustration second
- * - Currently static; animation will be added via Framer Motion or CSS later
+ * Why this approach?
+ * - Parallax draws attention to illustration without overwhelming text
+ * - Layer separation creates depth and visual interest
+ * - Scroll-based motion feels natural and responsive to user action
+ * - Accessibility-first: motion is optional, not required for content
+ *
+ * Animation tuning:
+ * - Max offset: ±40px (subtle, not distracting)
+ * - Layer rates: 0.3, 0.5, 0.7 (staggered depth)
+ * - No spring/bounce: linear, smooth motion tied to scroll
+ * - Respects motion preferences: instant if reduced-motion enabled
  */
 export const Hero: React.FC = () => {
+  const scrollProgress = useScrollProgress();
+  const prefersReducedMotion = usePrefersReducedMotion();
+
+  // Max offset in pixels (controls parallax intensity)
+  // Subtle value prevents motion sickness and maintains focus on content
+  const maxOffset = 40;
+
+  // Layer offsets: each moves at different rate for parallax depth effect
+  // Rates are between 0 (no movement) and 1 (follows scroll exactly)
+  const backgroundOffset = scrollProgress * maxOffset * 0.3;
+  const midgroundOffset = scrollProgress * maxOffset * 0.5;
+  const foregroundOffset = scrollProgress * maxOffset * 0.7;
+
   return (
     <section
       id="hero"
@@ -30,7 +56,7 @@ export const Hero: React.FC = () => {
     >
       <Container>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          {/* Left column: text content */}
+          {/* Left column: text content (static, no animation) */}
           <div className="space-y-6">
             <div>
               <h1
@@ -50,7 +76,7 @@ export const Hero: React.FC = () => {
               Passionate about solving complex problems with clean code and data-driven decisions.
             </p>
 
-            {/* CTA placeholder - will be enhanced with buttons later */}
+            {/* CTA buttons */}
             <div className="pt-4 flex gap-4">
               <a
                 href="#featured-projects"
@@ -67,21 +93,44 @@ export const Hero: React.FC = () => {
             </div>
           </div>
 
-          {/* Right column: illustration placeholder */}
-          <div className="flex items-center justify-center">
+          {/* Right column: parallax illustration */}
+          <div className="flex items-center justify-center overflow-hidden">
             {/* 
-              Illustration placeholder: ready for:
-              - Static image: replace with <img> or <Image />
-              - SVG illustration: insert inline SVG
-              - Animated components: add Framer Motion or CSS animations
-              - Parallax effect: parent can use scroll listeners
-              
-              Current: simple gradient box for visual distinction
+              Layered illustration with parallax effect.
+              Each layer moves independently based on scroll progress.
+              Disabled if user has prefers-reduced-motion enabled.
             */}
-            <div className="w-full aspect-square bg-gradient-to-br from-slate-200 to-slate-300 rounded-2xl flex items-center justify-center">
-              <div className="text-center text-slate-500">
-                <p className="text-6xl mb-2">🎨</p>
-                <p className="text-sm">Illustration / Avatar</p>
+            <div className="relative w-full aspect-square">
+              {/* Background layer: slowest movement (depth cue) */}
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-br from-slate-200 to-slate-300 rounded-2xl"
+                style={{
+                  y: prefersReducedMotion ? 0 : backgroundOffset,
+                }}
+              />
+
+              {/* Midground layer: medium movement */}
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-tr from-slate-300 to-slate-400 rounded-2xl opacity-60"
+                style={{
+                  y: prefersReducedMotion ? 0 : midgroundOffset,
+                }}
+              />
+
+              {/* Foreground layer: fastest movement (brings detail closer) */}
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-b from-slate-400 to-slate-500 rounded-2xl opacity-40"
+                style={{
+                  y: prefersReducedMotion ? 0 : foregroundOffset,
+                }}
+              />
+
+              {/* Center content: illustration placeholder */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="text-center text-slate-50">
+                  <p className="text-6xl mb-2">🎨</p>
+                  <p className="text-sm font-medium">Illustration / Avatar</p>
+                </div>
               </div>
             </div>
           </div>
