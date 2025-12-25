@@ -5,6 +5,7 @@ import { projects } from '@/data/projects';
 import { skills } from '@/data/skills';
 import { exploring } from '@/data/exploring';
 import { education } from '@/data/education';
+import { certificates } from '@/data/certificates';
 
 export default function Page() {
   return (
@@ -138,6 +139,39 @@ export default function Page() {
                   <h3 className="text-lg font-semibold text-slate-900">{edu.degree}</h3>
                   <p className="text-slate-600">{edu.institution}</p>
                   {edu.field && <p className="text-slate-500 text-sm mt-1">Field: {edu.field}</p>}
+                </li>
+              ))}
+            </ul>
+          ) : null}
+        </Container>
+      </Section>
+
+      {/* 6b. Certificates */}
+      <Section id="certificates" heading="Certificates" bgColor="bg-white">
+        <Container>
+          {certificates.length > 0 ? (
+            <ul className="space-y-4">
+              {certificates.map(cert => (
+                <li
+                  key={`${cert.issuer}-${cert.year}`}
+                  className="bg-slate-50 p-4 rounded-lg border border-slate-200"
+                >
+                  <div className="flex items-start justify-between">
+                    <div>
+                      <p className="font-semibold text-slate-900">{cert.title}</p>
+                      <p className="text-slate-600 text-sm">
+                        {cert.issuer} • {cert.year}
+                      </p>
+                    </div>
+                    <a
+                      href={cert.certificateUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-slate-600 hover:text-slate-900 text-sm font-medium underline ml-4 flex-shrink-0"
+                    >
+                      View
+                    </a>
+                  </div>
                 </li>
               ))}
             </ul>

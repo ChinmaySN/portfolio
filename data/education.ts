@@ -16,16 +16,4 @@ export const education: Education[] = [
     year: 2027,
     field: 'Electronics and Communication Engineering',
   },
-  {
-    degree: 'Artificial Intelligence with Microsoft',
-    institution: 'IntrnForte',
-    year: 2024,
-    field: 'Certification',
-  },
-  {
-    degree: 'Full Stack Web Development',
-    institution: 'IntrnForte',
-    year: 2024,
-    field: 'Certification',
-  },
 ];
