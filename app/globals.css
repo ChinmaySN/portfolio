@@ -26,3 +26,29 @@
 	scroll-snap-align: start;    /* Align section to the top when snapping */
 	scroll-snap-stop: normal;    /* Calmer settle; allow natural momentum before snapping */
 }
+
+/* 3D Folder Component - CSS Variables */
+:root {
+  --folder-back: 251 191 36;
+  --folder-front: 252 211 77;
+  --folder-tab: 245 158 11;
+}
+
+.dark {
+  --folder-back: 245 158 11;
+  --folder-front: 251 191 36;
+  --folder-tab: 217 119 6;
+}
+
+/* Tailwind utilities for the 3D folder colors */
+.bg-folder-back {
+  background-color: rgb(var(--folder-back));
+}
+
+.bg-folder-front {
+  background-color: rgb(var(--folder-front));
+}
+
+.bg-folder-tab {
+  background-color: rgb(var(--folder-tab));
+}

@@ -2,6 +2,8 @@ import React from 'react';
 import { Section } from '@/components/layout/Section';
 import { Container } from '@/components/layout/Container';
 import { Hero } from '@/components/hero/Hero';
+import { ExploringSection } from '@/components/sections/exploring-section';
+import { FeaturedProjectsFolders } from '@/components/sections/featured-projects-folders';
 import { projects } from '@/data/projects';
 import { skills } from '@/data/skills';
 import { exploring } from '@/data/exploring';
@@ -20,91 +22,10 @@ export default function Page() {
       {/* 1. Hero */}
       <Hero />
 
-      {/* 2. Featured Projects */}
-      <Section id="featured-projects" heading="Featured Projects" bgColor="bg-slate-50" className="snap-section">
-        <Container>
-          {projects.length > 0 ? (
-            <ul className="space-y-8">
-              {projects.map(project => (
-                <li
-                  key={project.id}
-                  /*
-                    Subtle affordance only: light lift + shadow on hover/focus to signal interactivity
-                    without flashy motion. No scale/rotation to keep it calm and premium.
-                  */
-                  className="rounded-xl border border-slate-200 bg-white shadow-sm p-6 md:p-8 space-y-4 transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-md hover:bg-slate-50 focus-within:-translate-y-0.5 focus-within:shadow-md focus-within:bg-slate-50"
-                >
-                  <div className="flex flex-col gap-2">
-                    <h3 className="text-2xl font-semibold text-slate-900 leading-tight">{project.title}</h3>
-                    {project.tags.length > 0 && (
-                      <div className="flex flex-wrap gap-2">
-                        {project.tags.map(tag => (
-                          <span
-                            key={tag}
-                            className="inline-block bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-xs font-medium"
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-
-                  <div className="grid gap-4 text-slate-700">
-                    <div>
-                      <p className="text-sm font-semibold text-slate-800">Problem</p>
-                      <p className="text-sm leading-relaxed">{project.problem}</p>
-                    </div>
-                    <div>
-                      <p className="text-sm font-semibold text-slate-800">Approach</p>
-                      <p className="text-sm leading-relaxed">{project.approach}</p>
-                    </div>
-                    <div>
-                      <p className="text-sm font-semibold text-slate-800">Outcome</p>
-                      <p className="text-sm leading-relaxed">{project.outcome}</p>
-                    </div>
-                  </div>
-
-                  <div className="space-y-3">
-                    {/* Proof is static (link or thumbnail) to build credibility without motion. */}
-                    <p className="text-sm font-semibold text-slate-800">Proof</p>
-                    <div className="flex flex-col gap-3">
-                      {project.link ? (
-                        <a
-                          href={project.link}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-sm font-semibold text-slate-900 underline decoration-2 underline-offset-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-500"
-                        >
-                          View Project
-                        </a>
-                      ) : null}
-
-                      {project.proofImages?.length ? (
-                        <div className="flex flex-wrap gap-3">
-                          {project.proofImages.map((src, idx) => (
-                            <div
-                              key={src}
-                              className="w-28 h-20 rounded-lg overflow-hidden border border-slate-200 bg-slate-50"
-                            >
-                              <img
-                                src={src}
-                                alt={`${project.title} proof ${idx + 1}`}
-                                className="w-full h-full object-cover"
-                                loading="lazy"
-                              />
-                            </div>
-                          ))}
-                        </div>
-                      ) : null}
-                    </div>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          ) : null}
-        </Container>
-      </Section>
+      {/* 2. Featured Projects - 3D Folder Animation */}
+      <div id="featured-projects" className="snap-section">
+        <FeaturedProjectsFolders />
+      </div>
 
       {/* 3. Process / How I Think */}
       <Section id="process" heading="Process / How I Think" bgColor="bg-white" className="snap-section">
@@ -147,23 +68,10 @@ export default function Page() {
         </Container>
       </Section>
 
-      {/* 5. Exploring Right Now */}
-      <Section id="exploring" heading="Exploring Right Now" bgColor="bg-white" className="snap-section">
-        <Container>
-          {exploring.length > 0 ? (
-            <ul className="space-y-4">
-              {exploring.map(item => (
-                <li key={item.label} className="bg-slate-50 p-4 rounded-lg border border-slate-200">
-                  <p className="font-semibold text-slate-900">{item.label}</p>
-                  {item.description && (
-                    <p className="text-slate-600 text-sm mt-1">{item.description}</p>
-                  )}
-                </li>
-              ))}
-            </ul>
-          ) : null}
-        </Container>
-      </Section>
+      {/* 5. Exploring Right Now - Scroll Animation */}
+      <div id="exploring" className="snap-section">
+        <ExploringSection />
+      </div>
 
       {/* 6. Education */}
       <Section id="education" heading="Education" bgColor="bg-slate-50" className="snap-section">
