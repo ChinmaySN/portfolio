@@ -6,7 +6,7 @@ import { Container } from '@/components/layout/Container';
 import { useScrollProgress } from '@/hooks/useScrollProgress';
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
 import { TypewriterEffectSmooth } from '@/components/ui/typewriter-effect';
-import { ParticleButton } from '@/components/ui/particle-button';
+import { GradientButton } from '@/components/ui/gradient-button';
 import { ScrollIndicator } from '@/components/ui/ScrollIndicator';
 import { MagneticImage } from '@/components/ui/morphing-cursor';
 
@@ -93,33 +93,25 @@ export const Hero: React.FC = () => {
               My approach is structured, data-first, and aimed at shipping dependable, maintainable results.
             </p>
 
-            {/* CTA buttons: ParticleButton components with click animation effects */}
+            {/* CTA buttons: GradientButton components with smooth animated gradients */}
             <div className="pt-4 flex gap-4">
-              <ParticleButton
+              <GradientButton
                 onClick={() => {
-                  setTimeout(() => {
-                    document.getElementById('featured-projects')?.scrollIntoView({ behavior: 'smooth' });
-                  }, 1000);
+                  document.getElementById('featured-projects')?.scrollIntoView({ behavior: 'smooth' });
                 }}
-                className="px-6 py-3 bg-dark-accent text-white font-medium rounded-lg shadow-md hover:shadow-lg hover:bg-dark-accent-hover focus:ring-2 focus:ring-dark-accent focus:ring-offset-2"
-                successDuration={800}
                 aria-label="Navigate to featured projects section"
               >
                 View Projects
-              </ParticleButton>
-              <ParticleButton
+              </GradientButton>
+              <GradientButton
                 onClick={() => {
-                  setTimeout(() => {
-                    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
-                  }, 1000);
+                  document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
                 }}
-                variant="outline"
-                className="px-6 py-3 border border-dark-border text-dark-text font-medium rounded-lg shadow-sm hover:shadow-md hover:bg-dark-bg-alt hover:border-dark-accent focus:ring-2 focus:ring-dark-accent focus:ring-offset-2"
-                successDuration={800}
+                variant="variant"
                 aria-label="Navigate to contact section"
               >
                 Contact
-              </ParticleButton>
+              </GradientButton>
             </div>
           </div>
 

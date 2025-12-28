@@ -16,13 +16,13 @@ export function NavBar({ className }: NavBarProps) {
     { name: 'Home', url: '#', icon: Home },
     { name: 'Projects', url: '#featured-projects', icon: FolderOpen },
     { name: 'Skills', url: '#skills', icon: Code },
-    { name: 'Education', url: '#education', icon: GraduationCap },
     { name: 'Exploring', url: '#exploring', icon: Compass },
+    { name: 'Education', url: '#education', icon: GraduationCap },
     { name: 'Certificates', url: '#certificates', icon: Award },
     { name: 'Contact', url: '#contact', icon: Mail },
     { name: 'Resume', url: '#resume', icon: FileText },
   ];
-  const [activeTab, setActiveTab] = useState(items[0].name)
+  const [activeTab, setActiveTab] = useState(items[0]?.name || 'Home')
   const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {

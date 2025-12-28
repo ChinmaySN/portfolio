@@ -76,7 +76,7 @@ export default function Page() {
         </Section>
       </SnapSection>
 
-      {/* 5. Exploring Right Now - Scroll Animation */}
+      {/* 4. Exploring Right Now - Scroll Animation */}
       <div 
         id="exploring" 
         className="min-h-screen snap-start"
@@ -85,7 +85,7 @@ export default function Page() {
         <ExploringSection />
       </div>
 
-      {/* 6. Education */}
+      {/* 5. Education */}
       <SnapSection>
         <Section id="education" heading="Education" bgColor="bg-dark-bg">
           <Container>
