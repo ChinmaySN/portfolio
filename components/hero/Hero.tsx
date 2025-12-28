@@ -93,9 +93,10 @@ export const Hero: React.FC = () => {
               My approach is structured, data-first, and aimed at shipping dependable, maintainable results.
             </p>
 
-            {/* CTA buttons: GradientButton components with smooth animated gradients */}
+            {/* CTA buttons: Minimal gradient buttons with engineering-focused aesthetic */}
             <div className="pt-4 flex gap-4">
               <GradientButton
+                variant="primary"
                 onClick={() => {
                   document.getElementById('featured-projects')?.scrollIntoView({ behavior: 'smooth' });
                 }}
@@ -104,10 +105,10 @@ export const Hero: React.FC = () => {
                 View Projects
               </GradientButton>
               <GradientButton
+                variant="secondary"
                 onClick={() => {
                   document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
                 }}
-                variant="variant"
                 aria-label="Navigate to contact section"
               >
                 Contact
