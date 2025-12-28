@@ -1,6 +1,31 @@
 @import "tailwindcss";
 
 /*
+	Simple Dark Theme
+	-------------------------------------------------
+	Clean, minimal dark mode with high contrast
+*/
+
+/* Root theme variables */
+:root {
+  --bg-primary: #0a0a0a;
+  --bg-secondary: #141414;
+  --bg-tertiary: #1a1a1a;
+  --border-color: #2a2a2a;
+  --text-primary: #e5e5e5;
+  --text-secondary: #a0a0a0;
+  --text-dim: #666666;
+  --accent: #3b82f6;
+  --accent-hover: #60a5fa;
+}
+
+/* Base body styling */
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+/*
 	Premium scroll experience via CSS Scroll Snap
 	-------------------------------------------------
 	Why CSS Scroll Snap?
@@ -14,30 +39,36 @@
 
 /* Scroll container: full viewport, vertical snap, smooth scroll */
 .snap-container {
-	height: 100vh;               /* One viewport tall */
+	height: 100vh;               /* Exact viewport height */
 	overflow-y: auto;            /* Allow vertical scrolling */
-	scroll-snap-type: y proximity; /* Vertical snapping, guided not forced */
-	scroll-behavior: smooth;     /* Smooth native scrolling */
+	overflow-x: hidden;          /* Prevent horizontal scroll */
+	scroll-snap-type: y mandatory; /* Mandatory snapping for deliberate, locked feel */
+	scroll-behavior: smooth;     /* Smooth native scrolling with easing */
+	scroll-padding-top: 0;       /* No offset, sections snap flush to top */
+	-webkit-overflow-scrolling: touch; /* Smooth momentum scrolling on iOS */
 }
 
 /* Each major section snaps cleanly to the top of the viewport */
 .snap-section {
-	min-height: 100vh;           /* Roughly one section per viewport */
+	height: 100vh;               /* Exact viewport height for clean snapping */
 	scroll-snap-align: start;    /* Align section to the top when snapping */
-	scroll-snap-stop: normal;    /* Calmer settle; allow natural momentum before snapping */
+	scroll-snap-stop: normal;    /* Allow natural scroll momentum, then settle */
+	position: relative;          /* Establish positioning context */
+	display: flex;               /* Flexbox for better content centering */
+	flex-direction: column;      /* Vertical layout */
 }
 
 /* 3D Folder Component - CSS Variables */
 :root {
-  --folder-back: 251 191 36;
-  --folder-front: 252 211 77;
-  --folder-tab: 245 158 11;
+  --folder-back: 59 130 246;   /* Blue accent */
+  --folder-front: 96 165 250;  /* Lighter blue */
+  --folder-tab: 37 99 235;     /* Darker blue */
 }
 
 .dark {
-  --folder-back: 245 158 11;
-  --folder-front: 251 191 36;
-  --folder-tab: 217 119 6;
+  --folder-back: 59 130 246;
+  --folder-front: 96 165 250;
+  --folder-tab: 37 99 235;
 }
 
 /* Tailwind utilities for the 3D folder colors */

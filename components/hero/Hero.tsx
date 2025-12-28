@@ -56,7 +56,7 @@ export const Hero: React.FC = () => {
     <section
       id="hero"
       aria-labelledby="hero-heading"
-      className="relative snap-section min-h-[90vh] lg:min-h-screen py-20 md:py-24 px-4 bg-gradient-to-b from-slate-50 to-white border-b border-slate-200"
+      className="relative h-full py-20 md:py-24 px-4 bg-dark-bg flex items-center"
     >
       <Container>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
@@ -65,30 +65,30 @@ export const Hero: React.FC = () => {
             <div>
               <h1
                 id="hero-heading"
-                className="text-5xl md:text-6xl font-bold text-slate-900 leading-tight"
+                className="text-5xl md:text-6xl font-bold text-dark-text leading-tight"
               >
                 Chinmay S N
               </h1>
               {/* Copy focuses on reliable systems across data, trading, and web without buzzwords. */}
               <TypewriterEffectSmooth
                 words={[
-                  { text: 'Engineering', className: '!text-slate-900 !font-semibold' },
-                  { text: 'reliable', className: '!text-slate-900 !font-semibold' },
-                  { text: 'systems', className: '!text-slate-900 !font-semibold' },
-                  { text: 'across', className: '!text-slate-900 !font-semibold' },
-                  { text: 'data,', className: '!text-slate-900 !font-semibold' },
-                  { text: 'trading,', className: '!text-slate-900 !font-semibold' },
-                  { text: 'and', className: '!text-slate-900 !font-semibold' },
-                  { text: 'the', className: '!text-slate-900 !font-semibold' },
-                  { text: 'web.', className: '!text-slate-900 !font-semibold' },
+                  { text: 'Engineering', className: '!text-dark-text !font-semibold' },
+                  { text: 'reliable', className: '!text-dark-text !font-semibold' },
+                  { text: 'systems', className: '!text-dark-text !font-semibold' },
+                  { text: 'across', className: '!text-dark-text !font-semibold' },
+                  { text: 'data,', className: '!text-dark-text !font-semibold' },
+                  { text: 'trading,', className: '!text-dark-text !font-semibold' },
+                  { text: 'and', className: '!text-dark-text !font-semibold' },
+                  { text: 'the', className: '!text-dark-text !font-semibold' },
+                  { text: 'web.', className: '!text-dark-text !font-semibold' },
                 ]}
-                className="!flex !space-x-0 !my-0 text-base sm:text-lg md:text-lg !pb-0 !text-slate-900"
-                cursorClassName="bg-slate-900 !h-3 sm:!h-5 xl:!h-8"
+                className="!flex !space-x-0 !my-0 text-base sm:text-lg md:text-lg !pb-0 !text-dark-text"
+                cursorClassName="bg-dark-accent !h-3 sm:!h-5 xl:!h-8"
               />
             </div>
 
             {/* Description paragraph */}
-            <p className="text-lg text-slate-600 max-w-md">
+            <p className="text-lg text-dark-text-muted max-w-md">
               I work on machine learning, trading systems, and full-stack web products.
               My approach is structured, data-first, and aimed at shipping dependable, maintainable results.
             </p>
@@ -101,8 +101,9 @@ export const Hero: React.FC = () => {
                     document.getElementById('featured-projects')?.scrollIntoView({ behavior: 'smooth' });
                   }, 1000);
                 }}
-                className="px-6 py-3 bg-slate-900 text-white font-medium rounded-lg shadow-md hover:shadow-lg hover:bg-slate-800 focus:ring-2 focus:ring-slate-500 focus:ring-offset-2"
+                className="px-6 py-3 bg-dark-accent text-white font-medium rounded-lg shadow-md hover:shadow-lg hover:bg-dark-accent-hover focus:ring-2 focus:ring-dark-accent focus:ring-offset-2"
                 successDuration={800}
+                aria-label="Navigate to featured projects section"
               >
                 View Projects
               </ParticleButton>
@@ -113,8 +114,9 @@ export const Hero: React.FC = () => {
                   }, 1000);
                 }}
                 variant="outline"
-                className="px-6 py-3 border border-slate-300 text-slate-900 font-medium rounded-lg shadow-sm hover:shadow-md hover:bg-slate-50 hover:border-slate-400 focus:ring-2 focus:ring-slate-400 focus:ring-offset-2"
+                className="px-6 py-3 border border-dark-border text-dark-text font-medium rounded-lg shadow-sm hover:shadow-md hover:bg-dark-bg-alt hover:border-dark-accent focus:ring-2 focus:ring-dark-accent focus:ring-offset-2"
                 successDuration={800}
+                aria-label="Navigate to contact section"
               >
                 Contact
               </ParticleButton>
@@ -130,7 +132,7 @@ export const Hero: React.FC = () => {
               - Smooth animation via RAF for buttery 60fps tracking
               - Desktop only, respects pointer capabilities
             */}
-            <div className="relative w-full aspect-square rounded-2xl overflow-hidden bg-gradient-to-br from-slate-200 to-slate-300 p-8">
+            <div className="relative w-full aspect-square rounded-2xl overflow-hidden bg-dark-bg-lighter p-8">
               <MagneticImage
                 baseImage="/certificates/illustration/myphoto.jpg"
                 hoverImage="/certificates/illustration/matrix.jpeg"
@@ -142,13 +144,10 @@ export const Hero: React.FC = () => {
         </div>
       </Container>
 
-      {/* Decorative scroll affordance: minimal, static indicator to hint more content below without motion. */}
-      <ScrollIndicator />
-
       {/* Subtle easter egg: low-contrast diamond that gently brightens on hover; decorative only. */}
       <div
         aria-hidden="true"
-        className="pointer-events-auto absolute bottom-10 right-10 h-3 w-3 rotate-45 bg-slate-300/50 border border-slate-400/50 shadow-sm transition-all duration-500 ease-out hover:opacity-80 hover:-translate-y-0.5"
+        className="pointer-events-auto absolute bottom-10 right-10 h-3 w-3 rotate-45 bg-dark-border border border-dark-text-dim shadow-sm transition-all duration-500 ease-out hover:opacity-80 hover:-translate-y-0.5"
       />
     </section>
   );

@@ -60,12 +60,12 @@ export const Section: React.FC<SectionProps> = ({
     <section
       id={id}
       aria-labelledby={`${id}-heading`}
-      className={`snap-section min-h-[90vh] lg:min-h-screen flex flex-col justify-center px-4 border-b border-slate-100/70 ${bgColor} ${className}`}
+      className={`h-full flex flex-col justify-center px-4 ${bgColor} ${className}`}
     >
       <div className="w-full max-w-5xl mx-auto flex flex-col gap-8 md:gap-10 lg:gap-12 py-16 md:py-20 lg:py-24">
         {/*
           Visual affordances (no animation):
-          - Tall sections keep a calm, one-scene-per-view rhythm (~90-100vh)
+          - Full height sections with centered content for clean snapping
           - Soft accent bar anchors the heading without harsh borders
           - Consistent vertical padding prevents cramped or floating content
         */}

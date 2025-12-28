@@ -1,6 +1,14 @@
 /**
- * Skills data grouped by category.
- * Each category contains a list of skill items with proficiency indication.
+ * Skills data grouped by capability and purpose.
+ * 
+ * Grouping Strategy:
+ * - "Build" → Core technical skills for creating systems
+ * - "Analyze" → Data, ML, and analytical capabilities  
+ * - "Trade" → Trading systems and market analysis
+ * - "Automate" → Integration and workflow automation
+ * 
+ * Each group is intentionally curated for signal over quantity.
+ * Proficiency is shown subtly (dot color) to avoid gamification.
  */
 
 export interface SkillItem {
@@ -10,31 +18,25 @@ export interface SkillItem {
 
 export interface SkillCategory {
   category: string;
+  description?: string; // Optional context for the capability
   items: SkillItem[];
 }
 
 export const skills: SkillCategory[] = [
   {
-    category: 'Frontend',
-    items: [
-      { name: 'HTML', proficiency: 'expert' },
-      { name: 'CSS', proficiency: 'expert' },
-      { name: 'JavaScript', proficiency: 'proficient' },
-      { name: 'Flask', proficiency: 'proficient' },
-      { name: 'React', proficiency: 'familiar' },
-    ],
-  },
-  {
-    category: 'Backend',
+    category: 'Build',
+    description: 'Web applications and backend systems',
     items: [
       { name: 'Python', proficiency: 'proficient' },
-      { name: 'Backend Development', proficiency: 'proficient' },
-      { name: 'User Authentication & Forms', proficiency: 'proficient' },
-      { name: 'SQL', proficiency: 'proficient' },
+      { name: 'JavaScript / React', proficiency: 'proficient' },
+      { name: 'Flask / Backend APIs', proficiency: 'proficient' },
+      { name: 'SQL Databases', proficiency: 'proficient' },
+      { name: 'HTML / CSS', proficiency: 'expert' },
     ],
   },
   {
-    category: 'Machine Learning & AI',
+    category: 'Analyze',
+    description: 'Machine learning and data systems',
     items: [
       { name: 'Machine Learning', proficiency: 'proficient' },
       { name: 'Deep Learning (CNNs)', proficiency: 'proficient' },
@@ -43,41 +45,23 @@ export const skills: SkillCategory[] = [
     ],
   },
   {
-    category: 'Algorithmic Trading',
+    category: 'Trade',
+    description: 'Algorithmic trading and market analysis',
     items: [
       { name: 'Pine Script', proficiency: 'expert' },
       { name: 'Strategy Backtesting', proficiency: 'expert' },
       { name: 'Technical Analysis', proficiency: 'proficient' },
+      { name: 'TradingView Platform', proficiency: 'expert' },
     ],
   },
   {
-    category: 'Automation & Integrations',
+    category: 'Automate',
+    description: 'Integrations and workflow automation',
     items: [
-      { name: 'n8n', proficiency: 'proficient' },
-      { name: 'WhatsApp API Integration', proficiency: 'proficient' },
+      { name: 'n8n Workflows', proficiency: 'proficient' },
       { name: 'API Integration', proficiency: 'proficient' },
-      { name: 'Map Integration', proficiency: 'proficient' },
-    ],
-  },
-  {
-    category: 'Tools & Platforms',
-    items: [
-      { name: 'Git & GitHub', proficiency: 'proficient' },
-      { name: 'Google Colab', proficiency: 'proficient' },
-      { name: 'TradingView', proficiency: 'expert' },
-      { name: 'VS Code', proficiency: 'expert' },
-    ],
-  },
-  {
-    category: 'Programming Languages',
-    items: [
-      { name: 'Python', proficiency: 'proficient' },
-      { name: 'JavaScript', proficiency: 'proficient' },
-      { name: 'SQL', proficiency: 'proficient' },
-      { name: 'Pine Script', proficiency: 'expert' },
-      { name: 'Java', proficiency: 'familiar' },
-      { name: 'C', proficiency: 'familiar' },
-      { name: 'C++', proficiency: 'familiar' },
+      { name: 'WhatsApp Business API', proficiency: 'proficient' },
+      { name: 'Git / GitHub', proficiency: 'proficient' },
     ],
   },
 ];

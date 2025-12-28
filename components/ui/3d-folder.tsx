@@ -9,16 +9,17 @@ interface Project {
   id: string;
   image: string;
   title: string;
+  link?: string;
 }
 
 interface AnimatedFolderProps {
   title: string;
   projects: Project[];
   className?: string;
+  isRevealed?: boolean;
 }
 
-export function AnimatedFolder({ title, projects, className }: AnimatedFolderProps) {
-  const [isHovered, setIsHovered] = useState(false);
+export function AnimatedFolder({ title, projects, className, isRevealed = false }: AnimatedFolderProps) {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [sourceRect, setSourceRect] = useState<DOMRect | null>(null);
   const [hiddenCardId, setHiddenCardId] = useState<string | null>(null);
@@ -52,52 +53,49 @@ export function AnimatedFolder({ title, projects, className }: AnimatedFolderPro
       <div
         className={cn(
           "relative flex flex-col items-center justify-center",
-          "p-8 rounded-2xl cursor-pointer",
-          "bg-white border border-slate-200",
+          "p-8 rounded-2xl",
+          "bg-dark-bg-alt border border-dark-border",
           "transition-all duration-500 ease-out",
-          "hover:shadow-2xl hover:shadow-yellow-500/10",
-          "hover:border-yellow-400/30",
+          isRevealed && "shadow-2xl shadow-dark-accent/10 border-dark-accent/30",
           "group",
           className
         )}
         style={{
-          minWidth: "280px",
-          minHeight: "320px",
-          perspective: "1000px",
+          minWidth: "400px",
+          minHeight: "520px",
+          perspective: "1500px",
         }}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
       >
-        {/* Subtle background glow on hover */}
+        {/* Subtle background glow */}
         <div
-          className="absolute inset-0 rounded-2xl transition-opacity duration-500"
+          className="absolute inset-0 rounded-2xl transition-opacity duration-1000"
           style={{
-            background: "radial-gradient(circle at 50% 70%, rgb(251 191 36) 0%, transparent 70%)",
-            opacity: isHovered ? 0.08 : 0,
+            background: "radial-gradient(circle at 50% 70%, rgb(59 130 246) 0%, transparent 70%)",
+            opacity: isRevealed ? 0.1 : 0,
           }}
         />
 
-        <div className="relative flex items-center justify-center mb-4" style={{ height: "160px", width: "200px" }}>
+        <div className="relative flex items-center justify-center mb-4 mt-16" style={{ height: "280px", width: "280px" }}>
           {/* Folder back layer - z-index 10 */}
           <div
-            className="absolute w-32 h-24 bg-folder-back rounded-lg shadow-md"
+            className="absolute w-48 h-36 bg-folder-back rounded-xl shadow-lg"
             style={{
               transformOrigin: "bottom center",
-              transform: isHovered ? "rotateX(-15deg)" : "rotateX(0deg)",
-              transition: "transform 500ms cubic-bezier(0.34, 1.56, 0.64, 1)",
+              transform: isRevealed ? "rotateX(-15deg)" : "rotateX(0deg)",
+              transition: "transform 800ms cubic-bezier(0.34, 1.56, 0.64, 1)",
               zIndex: 10,
             }}
           />
 
           {/* Folder tab - z-index 10 */}
           <div
-            className="absolute w-12 h-4 bg-folder-tab rounded-t-md"
+            className="absolute w-16 h-6 bg-folder-tab rounded-t-md"
             style={{
-              top: "calc(50% - 48px - 12px)",
-              left: "calc(50% - 64px + 16px)",
+              top: "calc(50% - 72px - 16px)",
+              left: "calc(50% - 96px + 24px)",
               transformOrigin: "bottom center",
-              transform: isHovered ? "rotateX(-25deg) translateY(-2px)" : "rotateX(0deg)",
-              transition: "transform 500ms cubic-bezier(0.34, 1.56, 0.64, 1)",
+              transform: isRevealed ? "rotateX(-25deg) translateY(-2px)" : "rotateX(0deg)",
+              transition: "transform 800ms cubic-bezier(0.34, 1.56, 0.64, 1)",
               zIndex: 10,
             }}
           />
@@ -120,8 +118,8 @@ export function AnimatedFolder({ title, projects, className }: AnimatedFolderPro
                 }}
                 image={project.image}
                 title={project.title}
-                delay={index * 80}
-                isVisible={isHovered}
+                delay={index * 100 + 400}
+                isVisible={isRevealed}
                 index={index}
                 onClick={() => handleProjectClick(project, index)}
                 isSelected={hiddenCardId === project.id}
@@ -131,25 +129,25 @@ export function AnimatedFolder({ title, projects, className }: AnimatedFolderPro
 
           {/* Folder front layer - z-index 30 */}
           <div
-            className="absolute w-32 h-24 bg-folder-front rounded-lg shadow-lg"
+            className="absolute w-48 h-36 bg-folder-front rounded-xl shadow-xl"
             style={{
-              top: "calc(50% - 48px + 4px)",
+              top: "calc(50% - 72px + 6px)",
               transformOrigin: "bottom center",
-              transform: isHovered ? "rotateX(25deg) translateY(8px)" : "rotateX(0deg)",
-              transition: "transform 500ms cubic-bezier(0.34, 1.56, 0.64, 1)",
+              transform: isRevealed ? "rotateX(25deg) translateY(8px)" : "rotateX(0deg)",
+              transition: "transform 800ms cubic-bezier(0.34, 1.56, 0.64, 1)",
               zIndex: 30,
             }}
           />
 
           {/* Folder shine effect - z-index 31 */}
           <div
-            className="absolute w-32 h-24 rounded-lg overflow-hidden pointer-events-none"
+            className="absolute w-48 h-36 rounded-xl overflow-hidden pointer-events-none"
             style={{
-              top: "calc(50% - 48px + 4px)",
+              top: "calc(50% - 72px + 6px)",
               background: "linear-gradient(135deg, rgba(255,255,255,0.3) 0%, transparent 50%)",
               transformOrigin: "bottom center",
-              transform: isHovered ? "rotateX(25deg) translateY(8px)" : "rotateX(0deg)",
-              transition: "transform 500ms cubic-bezier(0.34, 1.56, 0.64, 1)",
+              transform: isRevealed ? "rotateX(25deg) translateY(8px)" : "rotateX(0deg)",
+              transition: "transform 800ms cubic-bezier(0.34, 1.56, 0.64, 1)",
               zIndex: 31,
             }}
           />
@@ -157,9 +155,10 @@ export function AnimatedFolder({ title, projects, className }: AnimatedFolderPro
 
         {/* Folder title */}
         <h3
-          className="text-lg font-semibold text-slate-900 mt-4 transition-all duration-300"
+          className="text-lg font-semibold text-dark-text mt-4 transition-all duration-500"
           style={{
-            transform: isHovered ? "translateY(4px)" : "translateY(0)",
+            transform: isRevealed ? "translateY(4px)" : "translateY(0)",
+            opacity: isRevealed ? 1 : 0.7,
           }}
         >
           {title}
@@ -167,23 +166,23 @@ export function AnimatedFolder({ title, projects, className }: AnimatedFolderPro
 
         {/* Project count */}
         <p
-          className="text-sm text-slate-600 transition-all duration-300"
+          className="text-sm text-dark-text-muted transition-all duration-500"
           style={{
-            opacity: isHovered ? 0.7 : 1,
+            opacity: isRevealed ? 0.7 : 1,
           }}
         >
           {projects.length} projects
         </p>
 
-        {/* Hover hint */}
+        {/* Scroll hint */}
         <div
-          className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-1.5 text-xs text-slate-600 transition-all duration-300"
+          className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-1.5 text-xs text-dark-text-muted transition-all duration-500"
           style={{
-            opacity: isHovered ? 0 : 0.6,
-            transform: isHovered ? "translateY(10px)" : "translateY(0)",
+            opacity: isRevealed ? 0 : 0.6,
+            transform: isRevealed ? "translateY(10px)" : "translateY(0)",
           }}
         >
-          <span>Hover to explore</span>
+          <span>Scroll to reveal</span>
         </div>
       </div>
 
@@ -368,7 +367,7 @@ function ImageLightbox({
       }}
     >
       <div
-        className="absolute inset-0 bg-slate-50/80 backdrop-blur-xl"
+        className="absolute inset-0 bg-black/90 backdrop-blur-xl"
         style={{
           opacity: animationPhase === "initial" && !isClosing ? 0 : 1,
           transition: "opacity 400ms cubic-bezier(0.16, 1, 0.3, 1)",
@@ -384,9 +383,9 @@ function ImageLightbox({
         className={cn(
           "absolute top-5 right-5 z-50",
           "w-10 h-10 flex items-center justify-center",
-          "rounded-full bg-slate-100/50 backdrop-blur-md",
-          "border border-slate-200",
-          "text-slate-600 hover:text-slate-900 hover:bg-slate-100",
+          "rounded-full bg-dark-bg-lighter/90 backdrop-blur-md",
+          "border border-dark-border",
+          "text-dark-text-muted hover:text-dark-text hover:bg-dark-bg-lighter",
           "transition-all duration-300 ease-out hover:scale-105 active:scale-95"
         )}
         style={{
@@ -407,9 +406,9 @@ function ImageLightbox({
         className={cn(
           "absolute left-4 md:left-8 z-50",
           "w-12 h-12 flex items-center justify-center",
-          "rounded-full bg-slate-100/50 backdrop-blur-md",
-          "border border-slate-200",
-          "text-slate-600 hover:text-slate-900 hover:bg-slate-100",
+          "rounded-full bg-dark-bg-lighter/90 backdrop-blur-md",
+          "border border-dark-border",
+          "text-dark-text-muted hover:text-dark-text hover:bg-dark-bg-lighter",
           "transition-all duration-300 ease-out hover:scale-110 active:scale-95",
           "disabled:opacity-0 disabled:pointer-events-none"
         )}
@@ -431,9 +430,9 @@ function ImageLightbox({
         className={cn(
           "absolute right-4 md:right-8 z-50",
           "w-12 h-12 flex items-center justify-center",
-          "rounded-full bg-slate-100/50 backdrop-blur-md",
-          "border border-slate-200",
-          "text-slate-600 hover:text-slate-900 hover:bg-slate-100",
+          "rounded-full bg-dark-bg-lighter/90 backdrop-blur-md",
+          "border border-dark-border",
+          "text-dark-text-muted hover:text-dark-text hover:bg-dark-bg-lighter",
           "transition-all duration-300 ease-out hover:scale-110 active:scale-95",
           "disabled:opacity-0 disabled:pointer-events-none"
         )}
@@ -461,7 +460,7 @@ function ImageLightbox({
         }}
       >
         <div
-          className={cn("relative overflow-hidden", "rounded-2xl", "bg-white", "ring-1 ring-slate-200", "shadow-2xl")}
+          className={cn("relative overflow-hidden", "rounded-2xl", "bg-dark-bg-lighter", "ring-1 ring-dark-border", "shadow-2xl")}
           style={{
             borderRadius: animationPhase === "initial" && !isClosing ? "8px" : "16px",
             transition: "border-radius 500ms cubic-bezier(0.16, 1, 0.3, 1)",
@@ -480,18 +479,18 @@ function ImageLightbox({
                   key={project.id}
                   src={project.image || "/placeholder.svg"}
                   alt={project.title}
-                  className="w-full h-auto max-h-[70vh] object-contain bg-slate-50 flex-shrink-0"
+                  className="w-full h-auto max-h-[70vh] object-contain bg-dark-bg flex-shrink-0"
                   style={{ minWidth: "100%" }}
                 />
               ))}
             </div>
 
             {/* Subtle vignette effect */}
-            <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-card/20 via-transparent to-card/10" />
+            <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-black/20 via-transparent to-black/10" />
           </div>
 
           <div
-            className={cn("px-6 py-5", "bg-white", "border-t border-slate-200")}
+            className={cn("px-6 py-5", "bg-dark-bg-lighter", "border-t border-dark-border")}
             style={{
               opacity: animationPhase === "complete" && !isClosing ? 1 : 0,
               transform: animationPhase === "complete" && !isClosing ? "translateY(0)" : "translateY(20px)",
@@ -500,15 +499,15 @@ function ImageLightbox({
           >
             <div className="flex items-start justify-between gap-4">
               <div className="flex-1 min-w-0">
-                <h3 className="text-lg font-medium text-slate-900 tracking-tight truncate h-7">
+                <h3 className="text-lg font-medium text-dark-text tracking-tight truncate h-7">
                   {currentProject?.title}
                 </h3>
                 <div className="flex items-center gap-3 mt-1">
-                  <p className="text-sm text-slate-600">
-                    <kbd className="px-1.5 py-0.5 mx-0.5 text-xs font-medium bg-slate-100 text-slate-600 rounded border border-slate-200">
+                  <p className="text-sm text-dark-text-muted">
+                    <kbd className="px-1.5 py-0.5 mx-0.5 text-xs font-medium bg-dark-bg text-dark-text-muted rounded border border-dark-border">
                       ←
                     </kbd>
-                    <kbd className="px-1.5 py-0.5 mx-0.5 text-xs font-medium bg-slate-100 text-slate-600 rounded border border-slate-200">
+                    <kbd className="px-1.5 py-0.5 mx-0.5 text-xs font-medium bg-dark-bg text-dark-text-muted rounded border border-dark-border">
                       →
                     </kbd>{" "}
                     to navigate
@@ -521,8 +520,8 @@ function ImageLightbox({
                         className={cn(
                           "w-2 h-2 rounded-full transition-all duration-300",
                           idx === internalIndex
-                            ? "bg-foreground scale-110"
-                            : "bg-slate-100-foreground/40 hover:bg-slate-100-foreground/60"
+                            ? "bg-dark-accent scale-110"
+                            : "bg-dark-text-dim hover:bg-dark-text-muted"
                         )}
                       />
                     ))}
@@ -530,19 +529,24 @@ function ImageLightbox({
                 </div>
               </div>
 
-              <button
-                className={cn(
-                  "flex items-center gap-2 px-4 py-2",
-                  "text-sm font-medium text-slate-600",
-                  "bg-slate-100/50 hover:bg-slate-100",
-                  "rounded-lg border border-slate-200",
-                  "transition-all duration-200 ease-out",
-                  "hover:text-slate-900"
-                )}
-              >
-                <span>View</span>
-                <ExternalLink className="w-3.5 h-3.5" />
-              </button>
+              {currentProject?.link && (
+                <a
+                  href={currentProject.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={cn(
+                    "flex items-center gap-2 px-4 py-2",
+                    "text-sm font-medium text-dark-text-muted",
+                    "bg-dark-bg hover:bg-dark-bg-alt",
+                    "rounded-lg border border-dark-border",
+                    "transition-all duration-200 ease-out",
+                    "hover:text-dark-text hover:border-dark-accent"
+                  )}
+                >
+                  <span>View</span>
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </a>
+              )}
             </div>
           </div>
         </div>
@@ -563,27 +567,33 @@ interface ProjectCardProps {
 
 const ProjectCard = forwardRef<HTMLDivElement, ProjectCardProps>(
   ({ image, title, delay, isVisible, index, onClick, isSelected }, ref) => {
-    const rotations = [-12, 0, 12];
-    const translations = [-55, 0, 55];
+    // Card positioning: spread horizontally when visible
+    const cardSpacing = 180; // Space between cards
+    const xPosition = (index - 1) * cardSpacing; // -180, 0, 180 for left, center, right
+    const yOffset = -160; // Fly up distance
+    const rotations = [-8, 0, 8]; // Subtle rotation for visual interest
 
     return (
       <div
         ref={ref}
         className={cn(
-          "absolute w-20 h-28 rounded-lg overflow-hidden shadow-xl",
-          "bg-white border border-slate-200",
-          "cursor-pointer hover:ring-2 hover:ring-yellow-400/50",
+          "absolute w-36 h-44 rounded-xl overflow-hidden shadow-2xl",
+          "bg-dark-bg-lighter border-2 border-dark-border",
+          "cursor-pointer hover:shadow-dark-accent/30 hover:scale-105 hover:border-dark-accent",
+          "transition-all duration-300",
           isSelected && "opacity-0"
         )}
         style={{
           transform: isVisible
-            ? `translateY(-90px) translateX(${translations[index]}px) rotate(${rotations[index]}deg) scale(1)`
-            : "translateY(0px) translateX(0px) rotate(0deg) scale(0.5)",
+            ? `translateX(${xPosition}px) translateY(${yOffset}px) rotate(${rotations[index]}deg) scale(1)`
+            : "translateX(0px) translateY(0px) rotate(0deg) scale(0.3)",
           opacity: isSelected ? 0 : isVisible ? 1 : 0,
-          transition: `all 600ms cubic-bezier(0.34, 1.56, 0.64, 1) ${delay}ms`,
-          zIndex: 10 - index,
-          left: "-40px",
-          top: "-56px",
+          transition: `all 650ms cubic-bezier(0.34, 1.56, 0.64, 1) ${delay}ms`,
+          zIndex: 20 + index, // Higher z-index for cards in front
+          left: "50%",
+          top: "50%",
+          marginLeft: "-72px", // Half of width to center
+          marginTop: "-88px", // Half of height to center
         }}
         onClick={(e) => {
           e.stopPropagation();
@@ -591,8 +601,8 @@ const ProjectCard = forwardRef<HTMLDivElement, ProjectCardProps>(
         }}
       >
         <img src={image || "/placeholder.svg"} alt={title} className="w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent" />
-        <p className="absolute bottom-1.5 left-1.5 right-1.5 text-[10px] font-medium text-white truncate">
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/70 to-transparent" />
+        <p className="absolute bottom-3 left-3 right-3 text-sm font-semibold text-white truncate drop-shadow-lg">
           {title}
         </p>
       </div>

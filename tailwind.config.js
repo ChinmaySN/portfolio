@@ -24,7 +24,22 @@ module.exports = {
     './components/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        // Simple Dark Theme
+        'dark': {
+          'bg': '#0a0a0a',
+          'bg-alt': '#141414',
+          'bg-lighter': '#1a1a1a',
+          'border': '#2a2a2a',
+          'text': '#e5e5e5',
+          'text-muted': '#a0a0a0',
+          'text-dim': '#666666',
+          'accent': '#3b82f6',
+          'accent-hover': '#60a5fa',
+        },
+      },
+    },
   },
   plugins: [],
 };
