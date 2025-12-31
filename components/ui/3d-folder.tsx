@@ -10,6 +10,9 @@ interface Project {
   image: string;
   title: string;
   link?: string;
+  outcome?: string;
+  approach?: string;
+  problem?: string;
 }
 
 interface AnimatedFolderProps {
@@ -53,16 +56,13 @@ export function AnimatedFolder({ title, projects, className, isRevealed = false 
       <div
         className={cn(
           "relative flex flex-col items-center justify-center",
-          "p-8 rounded-2xl",
-          "bg-theme-secondary border border-theme",
           "transition-all duration-500 ease-out",
-          isRevealed && "shadow-theme-lg border-theme-accent/30",
           "group",
           className
         )}
         style={{
-          minWidth: "400px",
-          minHeight: "520px",
+          minWidth: "300px",
+          minHeight: "340px",
           perspective: "1500px",
         }}
       >
@@ -71,14 +71,14 @@ export function AnimatedFolder({ title, projects, className, isRevealed = false 
           className="absolute inset-0 rounded-2xl transition-opacity duration-1000"
           style={{
             background: "radial-gradient(circle at 50% 70%, rgb(59 130 246) 0%, transparent 70%)",
-            opacity: isRevealed ? 0.1 : 0,
+            opacity: isRevealed ? 0.04 : 0,
           }}
         />
 
-        <div className="relative flex items-center justify-center mb-4 mt-16" style={{ height: "280px", width: "280px" }}>
+        <div className="relative flex items-center justify-center mb-2 mt-6" style={{ height: "200px", width: "200px" }}>
           {/* Folder back layer - z-index 10 */}
           <div
-            className="absolute w-48 h-36 bg-folder-back rounded-xl shadow-lg"
+            className="absolute w-40 h-28 bg-folder-back rounded-xl shadow-lg"
             style={{
               transformOrigin: "bottom center",
               transform: isRevealed ? "rotateX(-15deg)" : "rotateX(0deg)",
@@ -89,10 +89,10 @@ export function AnimatedFolder({ title, projects, className, isRevealed = false 
 
           {/* Folder tab - z-index 10 */}
           <div
-            className="absolute w-16 h-6 bg-folder-tab rounded-t-md"
+            className="absolute w-14 h-5 bg-folder-tab rounded-t-md"
             style={{
-              top: "calc(50% - 72px - 16px)",
-              left: "calc(50% - 96px + 24px)",
+              top: "calc(50% - 56px - 14px)",
+              left: "calc(50% - 80px + 20px)",
               transformOrigin: "bottom center",
               transform: isRevealed ? "rotateX(-25deg) translateY(-2px)" : "rotateX(0deg)",
               transition: "transform 800ms cubic-bezier(0.34, 1.56, 0.64, 1)",
@@ -118,20 +118,24 @@ export function AnimatedFolder({ title, projects, className, isRevealed = false 
                 }}
                 image={project.image}
                 title={project.title}
-                delay={index * 100 + 400}
+                delay={index * 120}
                 isVisible={isRevealed}
                 index={index}
                 onClick={() => handleProjectClick(project, index)}
                 isSelected={hiddenCardId === project.id}
+                link={project.link}
+                outcome={project.outcome}
+                approach={project.approach}
+                problem={project.problem}
               />
             ))}
           </div>
 
           {/* Folder front layer - z-index 30 */}
           <div
-            className="absolute w-48 h-36 bg-folder-front rounded-xl shadow-xl"
+            className="absolute w-40 h-28 bg-folder-front rounded-xl shadow-xl"
             style={{
-              top: "calc(50% - 72px + 6px)",
+              top: "calc(50% - 56px + 5px)",
               transformOrigin: "bottom center",
               transform: isRevealed ? "rotateX(25deg) translateY(8px)" : "rotateX(0deg)",
               transition: "transform 800ms cubic-bezier(0.34, 1.56, 0.64, 1)",
@@ -141,9 +145,9 @@ export function AnimatedFolder({ title, projects, className, isRevealed = false 
 
           {/* Folder shine effect - z-index 31 */}
           <div
-            className="absolute w-48 h-36 rounded-xl overflow-hidden pointer-events-none"
+            className="absolute w-40 h-28 rounded-xl overflow-hidden pointer-events-none"
             style={{
-              top: "calc(50% - 72px + 6px)",
+              top: "calc(50% - 56px + 5px)",
               background: "linear-gradient(135deg, rgba(255,255,255,0.3) 0%, transparent 50%)",
               transformOrigin: "bottom center",
               transform: isRevealed ? "rotateX(25deg) translateY(8px)" : "rotateX(0deg)",
@@ -155,7 +159,7 @@ export function AnimatedFolder({ title, projects, className, isRevealed = false 
 
         {/* Folder title */}
         <h3
-          className="text-lg font-semibold text-theme-primary mt-4 transition-all duration-500"
+          className="text-base font-semibold text-theme-primary mt-3 transition-all duration-500"
           style={{
             transform: isRevealed ? "translateY(4px)" : "translateY(0)",
             opacity: isRevealed ? 1 : 0.7,
@@ -166,7 +170,7 @@ export function AnimatedFolder({ title, projects, className, isRevealed = false 
 
         {/* Project count */}
         <p
-          className="text-sm text-theme-secondary transition-all duration-500"
+          className="text-xs text-theme-secondary transition-all duration-500"
           style={{
             opacity: isRevealed ? 0.7 : 1,
           }}
@@ -563,48 +567,129 @@ interface ProjectCardProps {
   index: number;
   onClick: () => void;
   isSelected: boolean;
+  link?: string;
+  outcome?: string;
+  approach?: string;
+  problem?: string;
 }
 
 const ProjectCard = forwardRef<HTMLDivElement, ProjectCardProps>(
-  ({ image, title, delay, isVisible, index, onClick, isSelected }, ref) => {
+  ({ image, title, delay, isVisible, index, onClick, isSelected, link, outcome, approach, problem }, ref) => {
+    const [isHovered, setIsHovered] = useState(false);
+    
     // Card positioning: spread horizontally when visible
-    const cardSpacing = 180; // Space between cards
-    const xPosition = (index - 1) * cardSpacing; // -180, 0, 180 for left, center, right
-    const yOffset = -160; // Fly up distance
+    const cardSpacing = 240; // Increased spacing for larger cards
+    const xPosition = (index - 1) * cardSpacing; // -240, 0, 240 for left, center, right
+    const yOffset = -240; // Strong upward lift for burst effect
+    const zOffset = 80; // Forward Z movement for depth
     const rotations = [-8, 0, 8]; // Subtle rotation for visual interest
+
+    // Extract one sentence each for hover details
+    const extractFirstSentence = (text: string = "") => {
+      const sentence = text.split('.')[0];
+      return sentence ? sentence + '.' : '';
+    };
+
+    const outcomeText = extractFirstSentence(outcome);
+    const whatBuilt = extractFirstSentence(approach);
+    const contextText = extractFirstSentence(problem);
 
     return (
       <div
         ref={ref}
         className={cn(
-          "absolute w-36 h-44 rounded-xl overflow-hidden shadow-theme-lg",
-          "bg-theme-tertiary border-2 border-theme",
-          "cursor-pointer hover:shadow-theme-lg hover:scale-105 hover:border-theme-accent",
+          "absolute rounded-xl overflow-visible shadow-theme-lg",
+          "cursor-pointer",
           "transition-all duration-300",
           isSelected && "opacity-0"
         )}
         style={{
+          width: "220px",
+          height: "280px",
           transform: isVisible
-            ? `translateX(${xPosition}px) translateY(${yOffset}px) rotate(${rotations[index]}deg) scale(1)`
-            : "translateX(0px) translateY(0px) rotate(0deg) scale(0.3)",
+            ? `translateX(${xPosition}px) translateY(${yOffset}px) translateZ(${zOffset}px) rotate(${rotations[index]}deg) scale(1)`
+            : "translateX(0px) translateY(0px) translateZ(0px) rotate(0deg) scale(0.3)",
           opacity: isSelected ? 0 : isVisible ? 1 : 0,
-          transition: `all 650ms cubic-bezier(0.34, 1.56, 0.64, 1) ${delay}ms`,
-          zIndex: 20 + index, // Higher z-index for cards in front
+          transition: `all 650ms cubic-bezier(0.16, 1.4, 0.44, 1) ${delay}ms`,
+          zIndex: 20 + index,
           left: "50%",
           top: "50%",
-          marginLeft: "-72px", // Half of width to center
-          marginTop: "-88px", // Half of height to center
+          marginLeft: "-110px", // Half of width to center
+          marginTop: "-140px", // Half of height to center
+          perspective: "1000px",
         }}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        onFocus={() => setIsHovered(true)}
+        onBlur={() => setIsHovered(false)}
         onClick={(e) => {
           e.stopPropagation();
-          onClick();
+          if (link) {
+            window.open(link, "_blank", "noopener,noreferrer");
+          }
         }}
+        tabIndex={0}
+        role="button"
+        aria-label={`Open ${title} project in new tab`}
       >
-        <img src={image || "/placeholder.svg"} alt={title} className="w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/70 to-transparent" />
-        <p className="absolute bottom-3 left-3 right-3 text-sm font-semibold text-white truncate drop-shadow-lg">
-          {title}
-        </p>
+        {/* Card inner container with flip transform */}
+        <div
+          className="relative w-full h-full transition-transform duration-500 ease-out"
+          style={{
+            transformStyle: "preserve-3d",
+            transform: isHovered ? "rotateY(180deg)" : "rotateY(0deg)",
+          }}
+        >
+          {/* Front face - Image and title */}
+          <div
+            className="absolute inset-0 w-full h-full rounded-xl overflow-hidden bg-theme-tertiary border-2 border-theme hover:border-theme-accent shadow-theme-lg"
+            style={{
+              backfaceVisibility: "hidden",
+            }}
+          >
+            <img src={image || "/placeholder.svg"} alt={title} className="w-full h-full object-cover" />
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent" />
+            <div className="absolute bottom-4 left-4 right-4">
+              <h3 className="text-base font-bold text-white line-clamp-2 drop-shadow-lg">
+                {title}
+              </h3>
+            </div>
+          </div>
+
+          {/* Back face - Project details */}
+          <div
+            className="absolute inset-0 w-full h-full rounded-xl overflow-hidden bg-gradient-to-br from-blue-600 to-purple-700 p-5 shadow-theme-lg border-2 border-blue-400"
+            style={{
+              backfaceVisibility: "hidden",
+              transform: "rotateY(180deg)",
+            }}
+          >
+            <div className="h-full flex flex-col justify-start space-y-3 text-white overflow-hidden">
+              <h3 className="text-sm font-bold mb-2 line-clamp-2">{title}</h3>
+              
+              {outcomeText && (
+                <div className="flex-shrink-0">
+                  <p className="text-xs font-semibold text-yellow-200 mb-1">Outcome</p>
+                  <p className="text-xs leading-relaxed text-white/95">{outcomeText}</p>
+                </div>
+              )}
+              
+              {whatBuilt && (
+                <div className="flex-shrink-0">
+                  <p className="text-xs font-semibold text-yellow-200 mb-1">What I Built</p>
+                  <p className="text-xs leading-relaxed text-white/95">{whatBuilt}</p>
+                </div>
+              )}
+              
+              {contextText && (
+                <div className="flex-shrink-0">
+                  <p className="text-xs font-semibold text-yellow-200 mb-1">Context</p>
+                  <p className="text-xs leading-relaxed text-white/95">{contextText}</p>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
