@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Container } from '@/components/layout/Container';
 import { useScrollProgress } from '@/hooks/useScrollProgress';
@@ -9,6 +9,7 @@ import { TypewriterEffectSmooth } from '@/components/ui/typewriter-effect';
 import { GradientButton } from '@/components/ui/gradient-button';
 import { ScrollIndicator } from '@/components/ui/ScrollIndicator';
 import { MagneticImage } from '@/components/ui/morphing-cursor';
+import SkyToggle from '@/components/ui/sky-toggle';
 
 /**
  * Hero component: establishes identity and tone with scroll-based parallax.
@@ -41,6 +42,36 @@ import { MagneticImage } from '@/components/ui/morphing-cursor';
 export const Hero: React.FC = () => {
   const scrollProgress = useScrollProgress();
   const prefersReducedMotion = usePrefersReducedMotion();
+  const [isDarkMode, setIsDarkMode] = useState(true);
+
+  // Initialize theme from localStorage on mount
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('theme');
+    const prefersDark = savedTheme === 'dark' || (!savedTheme && true); // Default to dark
+    setIsDarkMode(prefersDark);
+    
+    // Apply theme immediately on mount
+    if (prefersDark) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, []);
+
+  // Handle theme toggle and save to localStorage
+  useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+    }
+  }, [isDarkMode]);
+
+  const handleThemeChange = (checked: boolean) => {
+    setIsDarkMode(checked);
+  };
 
   // Max offset in pixels (controls parallax intensity)
   // Subtle value prevents motion sickness and maintains focus on content
@@ -56,41 +87,56 @@ export const Hero: React.FC = () => {
     <section
       id="hero"
       aria-labelledby="hero-heading"
-      className="relative h-full py-20 md:py-24 px-4 bg-dark-bg flex items-center"
+      className="relative h-full py-20 md:py-24 px-4 bg-theme-primary flex items-center overflow-hidden"
     >
+      {/* Theme Toggle - Responsive positioning */}
+      <div className="absolute top-4 right-4 sm:top-6 sm:right-6 z-[60]">
+        <div className="opacity-70 hover:opacity-100 transition-opacity scale-90 sm:scale-100">
+          <SkyToggle 
+            checked={isDarkMode}
+            onChange={handleThemeChange}
+          />
+        </div>
+      </div>
+
       <Container>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
           {/* Left column: text content (static, no animation) */}
-          <div className="space-y-6">
-            <div>
+          <div className="space-y-6 max-w-full lg:max-w-2xl">
+            <div className="space-y-2">
               <h1
                 id="hero-heading"
-                className="text-5xl md:text-6xl font-bold text-dark-text leading-tight"
+                className="text-5xl md:text-6xl font-bold text-theme-primary leading-tight"
               >
                 Chinmay S N
               </h1>
               {/* Copy focuses on reliable systems across data, trading, and web without buzzwords. */}
-              <TypewriterEffectSmooth
-                words={[
-                  { text: 'Engineering', className: '!text-dark-text !font-semibold' },
-                  { text: 'reliable', className: '!text-dark-text !font-semibold' },
-                  { text: 'systems', className: '!text-dark-text !font-semibold' },
-                  { text: 'across', className: '!text-dark-text !font-semibold' },
-                  { text: 'data,', className: '!text-dark-text !font-semibold' },
-                  { text: 'trading,', className: '!text-dark-text !font-semibold' },
-                  { text: 'and', className: '!text-dark-text !font-semibold' },
-                  { text: 'the', className: '!text-dark-text !font-semibold' },
-                  { text: 'web.', className: '!text-dark-text !font-semibold' },
-                ]}
-                className="!flex !space-x-0 !my-0 text-base sm:text-lg md:text-lg !pb-0 !text-dark-text"
-                cursorClassName="bg-dark-accent !h-3 sm:!h-5 xl:!h-8"
-              />
+              <div className="overflow-x-auto">
+                <TypewriterEffectSmooth
+                  words={[
+                    { text: 'I', className: '!text-theme-primary !font-semibold' },
+                    { text: 'build', className: '!text-theme-primary !font-semibold' },
+                    { text: 'the', className: '!text-theme-primary !font-semibold' },
+                    { text: 'frontend', className: '!text-theme-primary !font-semibold' },
+                    { text: 'you', className: '!text-theme-primary !font-semibold' },
+                    { text: 'see', className: '!text-theme-primary !font-semibold' },
+                    { text: 'and', className: '!text-theme-primary !font-semibold' },
+                    { text: 'the', className: '!text-theme-primary !font-semibold' },
+                    { text: 'backend', className: '!text-theme-primary !font-semibold' },
+                    { text: 'you', className: '!text-theme-primary !font-semibold' },
+                    { text: "don't.", className: '!text-theme-primary !font-semibold' },
+                  ]}
+                  className="!flex !space-x-0 !my-0 text-base sm:text-lg md:text-xl !pb-0 !text-theme-primary"
+                  cursorClassName="bg-theme-accent !h-3 sm:!h-5 xl:!h-7"
+                />
+              </div>
             </div>
 
             {/* Description paragraph */}
-            <p className="text-lg text-dark-text-muted max-w-md">
-              I work on machine learning, trading systems, and full-stack web products.
-              My approach is structured, data-first, and aimed at shipping dependable, maintainable results.
+            <p className="text-lg text-theme-secondary max-w-xl leading-relaxed">
+              Full-stack developer building reliable web products from scratch.
+              I work across UI, backend APIs, automation, and data-driven systems.
+              My background spans web development, machine learning, and trading systems — all focused on clean, maintainable engineering.
             </p>
 
             {/* CTA buttons: Minimal gradient buttons with engineering-focused aesthetic */}
@@ -125,7 +171,7 @@ export const Hero: React.FC = () => {
               - Smooth animation via RAF for buttery 60fps tracking
               - Desktop only, respects pointer capabilities
             */}
-            <div className="relative w-full aspect-square rounded-2xl overflow-hidden bg-dark-bg-lighter p-8">
+            <div className="relative w-full aspect-square rounded-2xl overflow-hidden bg-theme-tertiary p-8">
               <MagneticImage
                 baseImage="/certificates/illustration/myphoto.jpg"
                 hoverImage="/certificates/illustration/matrix.jpeg"
@@ -136,12 +182,6 @@ export const Hero: React.FC = () => {
           </div>
         </div>
       </Container>
-
-      {/* Subtle easter egg: low-contrast diamond that gently brightens on hover; decorative only. */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-auto absolute bottom-10 right-10 h-3 w-3 rotate-45 bg-dark-border border border-dark-text-dim shadow-sm transition-all duration-500 ease-out hover:opacity-80 hover:-translate-y-0.5"
-      />
     </section>
   );
 };

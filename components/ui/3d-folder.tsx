@@ -54,9 +54,9 @@ export function AnimatedFolder({ title, projects, className, isRevealed = false 
         className={cn(
           "relative flex flex-col items-center justify-center",
           "p-8 rounded-2xl",
-          "bg-dark-bg-alt border border-dark-border",
+          "bg-theme-secondary border border-theme",
           "transition-all duration-500 ease-out",
-          isRevealed && "shadow-2xl shadow-dark-accent/10 border-dark-accent/30",
+          isRevealed && "shadow-theme-lg border-theme-accent/30",
           "group",
           className
         )}
@@ -155,7 +155,7 @@ export function AnimatedFolder({ title, projects, className, isRevealed = false 
 
         {/* Folder title */}
         <h3
-          className="text-lg font-semibold text-dark-text mt-4 transition-all duration-500"
+          className="text-lg font-semibold text-theme-primary mt-4 transition-all duration-500"
           style={{
             transform: isRevealed ? "translateY(4px)" : "translateY(0)",
             opacity: isRevealed ? 1 : 0.7,
@@ -166,7 +166,7 @@ export function AnimatedFolder({ title, projects, className, isRevealed = false 
 
         {/* Project count */}
         <p
-          className="text-sm text-dark-text-muted transition-all duration-500"
+          className="text-sm text-theme-secondary transition-all duration-500"
           style={{
             opacity: isRevealed ? 0.7 : 1,
           }}
@@ -176,7 +176,7 @@ export function AnimatedFolder({ title, projects, className, isRevealed = false 
 
         {/* Scroll hint */}
         <div
-          className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-1.5 text-xs text-dark-text-muted transition-all duration-500"
+          className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-1.5 text-xs text-theme-dim transition-all duration-500"
           style={{
             opacity: isRevealed ? 0 : 0.6,
             transform: isRevealed ? "translateY(10px)" : "translateY(0)",
@@ -383,9 +383,9 @@ function ImageLightbox({
         className={cn(
           "absolute top-5 right-5 z-50",
           "w-10 h-10 flex items-center justify-center",
-          "rounded-full bg-dark-bg-lighter/90 backdrop-blur-md",
-          "border border-dark-border",
-          "text-dark-text-muted hover:text-dark-text hover:bg-dark-bg-lighter",
+          "rounded-full bg-theme-tertiary/90 backdrop-blur-md",
+          "border border-theme",
+          "text-theme-secondary hover:text-theme-primary hover:bg-theme-tertiary",
           "transition-all duration-300 ease-out hover:scale-105 active:scale-95"
         )}
         style={{
@@ -406,9 +406,9 @@ function ImageLightbox({
         className={cn(
           "absolute left-4 md:left-8 z-50",
           "w-12 h-12 flex items-center justify-center",
-          "rounded-full bg-dark-bg-lighter/90 backdrop-blur-md",
-          "border border-dark-border",
-          "text-dark-text-muted hover:text-dark-text hover:bg-dark-bg-lighter",
+          "rounded-full bg-theme-tertiary/90 backdrop-blur-md",
+          "border border-theme",
+          "text-theme-secondary hover:text-theme-primary hover:bg-theme-tertiary",
           "transition-all duration-300 ease-out hover:scale-110 active:scale-95",
           "disabled:opacity-0 disabled:pointer-events-none"
         )}
@@ -430,9 +430,9 @@ function ImageLightbox({
         className={cn(
           "absolute right-4 md:right-8 z-50",
           "w-12 h-12 flex items-center justify-center",
-          "rounded-full bg-dark-bg-lighter/90 backdrop-blur-md",
-          "border border-dark-border",
-          "text-dark-text-muted hover:text-dark-text hover:bg-dark-bg-lighter",
+          "rounded-full bg-theme-tertiary/90 backdrop-blur-md",
+          "border border-theme",
+          "text-theme-secondary hover:text-theme-primary hover:bg-theme-tertiary",
           "transition-all duration-300 ease-out hover:scale-110 active:scale-95",
           "disabled:opacity-0 disabled:pointer-events-none"
         )}
@@ -460,7 +460,7 @@ function ImageLightbox({
         }}
       >
         <div
-          className={cn("relative overflow-hidden", "rounded-2xl", "bg-dark-bg-lighter", "ring-1 ring-dark-border", "shadow-2xl")}
+          className={cn("relative overflow-hidden", "rounded-2xl", "bg-theme-tertiary", "ring-1 ring-theme", "shadow-theme-lg")}
           style={{
             borderRadius: animationPhase === "initial" && !isClosing ? "8px" : "16px",
             transition: "border-radius 500ms cubic-bezier(0.16, 1, 0.3, 1)",
@@ -479,7 +479,7 @@ function ImageLightbox({
                   key={project.id}
                   src={project.image || "/placeholder.svg"}
                   alt={project.title}
-                  className="w-full h-auto max-h-[70vh] object-contain bg-dark-bg flex-shrink-0"
+                  className="w-full h-auto max-h-[70vh] object-contain bg-theme-secondary flex-shrink-0"
                   style={{ minWidth: "100%" }}
                 />
               ))}
@@ -490,7 +490,7 @@ function ImageLightbox({
           </div>
 
           <div
-            className={cn("px-6 py-5", "bg-dark-bg-lighter", "border-t border-dark-border")}
+            className={cn("px-6 py-5", "bg-theme-tertiary", "border-t border-theme")}
             style={{
               opacity: animationPhase === "complete" && !isClosing ? 1 : 0,
               transform: animationPhase === "complete" && !isClosing ? "translateY(0)" : "translateY(20px)",
@@ -499,15 +499,15 @@ function ImageLightbox({
           >
             <div className="flex items-start justify-between gap-4">
               <div className="flex-1 min-w-0">
-                <h3 className="text-lg font-medium text-dark-text tracking-tight truncate h-7">
+                <h3 className="text-lg font-medium text-theme-primary tracking-tight truncate h-7">
                   {currentProject?.title}
                 </h3>
                 <div className="flex items-center gap-3 mt-1">
-                  <p className="text-sm text-dark-text-muted">
-                    <kbd className="px-1.5 py-0.5 mx-0.5 text-xs font-medium bg-dark-bg text-dark-text-muted rounded border border-dark-border">
+                  <p className="text-sm text-theme-secondary">
+                    <kbd className="px-1.5 py-0.5 mx-0.5 text-xs font-medium bg-theme-secondary text-theme-secondary rounded border border-theme">
                       ←
                     </kbd>
-                    <kbd className="px-1.5 py-0.5 mx-0.5 text-xs font-medium bg-dark-bg text-dark-text-muted rounded border border-dark-border">
+                    <kbd className="px-1.5 py-0.5 mx-0.5 text-xs font-medium bg-theme-secondary text-theme-secondary rounded border border-theme">
                       →
                     </kbd>{" "}
                     to navigate
@@ -518,10 +518,10 @@ function ImageLightbox({
                         key={idx}
                         onClick={() => handleDotClick(idx)}
                         className={cn(
-                          "w-2 h-2 rounded-full transition-all duration-300",
+                          "w-2 h-2 rounded-full transition-all duration-300 ring-1 ring-black/40 dark:ring-white/20",
                           idx === internalIndex
-                            ? "bg-dark-accent scale-110"
-                            : "bg-dark-text-dim hover:bg-dark-text-muted"
+                            ? "bg-theme-accent scale-110"
+                            : "bg-theme-dim hover:bg-theme-secondary"
                         )}
                       />
                     ))}
@@ -536,11 +536,11 @@ function ImageLightbox({
                   rel="noopener noreferrer"
                   className={cn(
                     "flex items-center gap-2 px-4 py-2",
-                    "text-sm font-medium text-dark-text-muted",
-                    "bg-dark-bg hover:bg-dark-bg-alt",
-                    "rounded-lg border border-dark-border",
+                    "text-sm font-medium text-theme-secondary",
+                    "bg-theme-secondary hover:bg-theme-primary",
+                    "rounded-lg border border-theme",
                     "transition-all duration-200 ease-out",
-                    "hover:text-dark-text hover:border-dark-accent"
+                    "hover:text-theme-primary hover:border-theme-accent"
                   )}
                 >
                   <span>View</span>
@@ -577,9 +577,9 @@ const ProjectCard = forwardRef<HTMLDivElement, ProjectCardProps>(
       <div
         ref={ref}
         className={cn(
-          "absolute w-36 h-44 rounded-xl overflow-hidden shadow-2xl",
-          "bg-dark-bg-lighter border-2 border-dark-border",
-          "cursor-pointer hover:shadow-dark-accent/30 hover:scale-105 hover:border-dark-accent",
+          "absolute w-36 h-44 rounded-xl overflow-hidden shadow-theme-lg",
+          "bg-theme-tertiary border-2 border-theme",
+          "cursor-pointer hover:shadow-theme-lg hover:scale-105 hover:border-theme-accent",
           "transition-all duration-300",
           isSelected && "opacity-0"
         )}

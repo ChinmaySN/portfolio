@@ -51,7 +51,7 @@ export const Section: React.FC<SectionProps> = ({
   heading,
   headingLevel = 'h2',
   className = '',
-  bgColor = 'bg-white',
+  bgColor = 'bg-theme-primary',
   children,
 }) => {
   const HeadingTag = headingLevel;
@@ -71,11 +71,11 @@ export const Section: React.FC<SectionProps> = ({
         */}
         <span
           aria-hidden="true"
-          className="block h-1 w-12 rounded-full bg-slate-900/15 dark:bg-white/30"
+          className="block h-1 w-12 rounded-full bg-theme-accent/50"
         />
         <HeadingTag
           id={`${id}-heading`}
-          className="text-3xl md:text-4xl font-semibold tracking-tight leading-tight text-[inherit]"
+          className="text-3xl md:text-4xl font-semibold tracking-tight leading-tight text-theme-primary"
         >
           {heading}
         </HeadingTag>

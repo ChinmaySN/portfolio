@@ -68,15 +68,15 @@ export function FeaturedProjectsFolders() {
     <section 
       ref={sectionRef}
       aria-labelledby="featured-projects-heading" 
-      className="w-full bg-dark-bg py-20"
+      className="w-full bg-theme-primary py-20"
     >
       <div className="max-w-7xl mx-auto px-6">
         {/* Section Header */}
         <div className="text-center mb-16">
-          <h2 id="featured-projects-heading" className="text-4xl md:text-5xl font-bold text-dark-text mb-4">
+          <h2 id="featured-projects-heading" className="text-4xl md:text-5xl font-bold text-theme-primary mb-4">
             Featured Projects
           </h2>
-          <p className="text-lg text-dark-text-muted max-w-2xl mx-auto">
+          <p className="text-lg text-theme-secondary max-w-2xl mx-auto">
             Scroll to reveal projects. Click on a card to view details.
           </p>
         </div>

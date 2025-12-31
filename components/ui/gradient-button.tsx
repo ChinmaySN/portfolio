@@ -23,9 +23,9 @@ const gradientButtonVariants = cva(
   [
     "relative inline-flex items-center justify-center gap-2",
     "px-6 py-3 rounded-lg",
-    "text-base font-medium text-white",
+    "text-base font-medium",
     "transition-all duration-300 ease-out",
-    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dark-accent focus-visible:ring-offset-2 focus-visible:ring-offset-dark-bg",
+    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-accent focus-visible:ring-offset-2",
     "disabled:pointer-events-none disabled:opacity-40",
     // Respects reduced motion preferences
     "motion-reduce:transition-none",
@@ -36,18 +36,17 @@ const gradientButtonVariants = cva(
         // Primary: Dark matte base with soft inner glow on hover
         primary: [
           "gradient-button-primary",
-          "bg-gradient-to-br from-slate-800 to-slate-900",
-          "border border-slate-700/50",
-          "shadow-sm hover:shadow-lg",
+          "text-theme-primary",
+          "border border-theme",
+          "shadow-theme-sm hover:shadow-theme-md",
           "hover:-translate-y-0.5",
         ],
         // Secondary: Transparent with thin border, minimal fill on hover
         secondary: [
           "gradient-button-secondary",
+          "text-theme-primary",
           "bg-transparent",
-          "border border-slate-700",
-          "hover:bg-slate-900/30",
-          "hover:border-slate-600",
+          "border border-theme",
         ],
       },
     },

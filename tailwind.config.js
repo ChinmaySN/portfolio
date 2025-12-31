@@ -23,21 +23,31 @@ module.exports = {
     './app/**/*.{js,ts,jsx,tsx}',
     './components/**/*.{js,ts,jsx,tsx}',
   ],
+  darkMode: 'class', // Enable class-based dark mode
   theme: {
     extend: {
       colors: {
-        // Simple Dark Theme
-        'dark': {
-          'bg': '#0a0a0a',
-          'bg-alt': '#141414',
-          'bg-lighter': '#1a1a1a',
-          'border': '#2a2a2a',
-          'text': '#e5e5e5',
-          'text-muted': '#a0a0a0',
-          'text-dim': '#666666',
-          'accent': '#3b82f6',
-          'accent-hover': '#60a5fa',
+        // Theme-aware colors via CSS variables
+        theme: {
+          primary: 'var(--bg-primary)',
+          secondary: 'var(--bg-secondary)',
+          tertiary: 'var(--bg-tertiary)',
+          border: 'var(--border-color)',
+          text: {
+            primary: 'var(--text-primary)',
+            secondary: 'var(--text-secondary)',
+            dim: 'var(--text-dim)',
+          },
+          accent: {
+            DEFAULT: 'var(--accent)',
+            hover: 'var(--accent-hover)',
+          },
         },
+      },
+      boxShadow: {
+        'theme-sm': 'var(--shadow-sm)',
+        'theme-md': 'var(--shadow-md)',
+        'theme-lg': 'var(--shadow-lg)',
       },
     },
   },

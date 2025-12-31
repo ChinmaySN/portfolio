@@ -63,7 +63,7 @@ export function SocialIcons() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
 
   return (
-    <div className="relative flex items-center gap-2 px-4 py-4 rounded-3xl bg-neutral-950 border border-white/[0.08]">
+    <div className="relative flex items-center gap-2 px-4 py-4 rounded-3xl bg-theme-tertiary border border-theme transition-colors duration-300">
       <div className="absolute inset-0 rounded-3xl bg-gradient-to-b from-white/[0.03] to-transparent pointer-events-none" />
 
       {socials.map((social, index) => (
@@ -78,21 +78,21 @@ export function SocialIcons() {
           aria-label={social.name}
         >
           <span
-            className={`absolute inset-1 rounded-lg bg-white/[0.08] transition-all duration-300 ease-out ${
+            className={`absolute inset-1 rounded-lg bg-theme-accent/10 transition-all duration-300 ease-out ${
               hoveredIndex === index ? "opacity-100 scale-100" : "opacity-0 scale-90"
             }`}
           />
 
           <span
             className={`relative z-10 transition-all duration-300 ease-out ${
-              hoveredIndex === index ? "text-white scale-110" : "text-neutral-500"
+              hoveredIndex === index ? "text-theme-primary scale-110" : "text-theme-secondary"
             }`}
           >
             {social.icon}
           </span>
 
           <span
-            className={`absolute bottom-1.5 left-1/2 -translate-x-1/2 h-[2px] rounded-full bg-white transition-all duration-300 ease-out ${
+            className={`absolute bottom-1.5 left-1/2 -translate-x-1/2 h-[2px] rounded-full bg-theme-accent transition-all duration-300 ease-out ${
               hoveredIndex === index ? "w-3 opacity-100" : "w-0 opacity-0"
             }`}
           />
