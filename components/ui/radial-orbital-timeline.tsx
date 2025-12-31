@@ -44,7 +44,7 @@ const iconMap: Record<string, LucideIcon> = {
 
 interface Skill {
   name: string;
-  proficiency: number;
+  proficiency: "Expert" | "Proficient" | "Intermediate";
   iconName: string;
   context?: string;
 }
@@ -370,31 +370,19 @@ export default function RadialOrbitalTimeline({
                     </p>
                   </div>
                 </div>
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setSelectedSkill(null);
-                  }}
-                  className="w-8 h-8 rounded-full flex items-center justify-center border border-dark-border/50 hover:bg-dark-border/10 transition-colors focus:outline-none focus:ring-2 focus:ring-dark-text/50"
-                  aria-label="Close"
-                >
-                  <X className="w-4 h-4 text-dark-text/70" />
-                </button>
               </CardHeader>
               <CardContent className="pt-6 space-y-6">
-                {/* Proficiency Bar */}
+                {/* Proficiency Level */}
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
                     <p className="text-sm font-medium text-dark-text/70">Proficiency</p>
-                    <p className="text-sm font-semibold text-dark-text/90">{selectedSkill.skill.proficiency}%</p>
-                  </div>
-                  <div className="w-full h-3 bg-dark-border/20 rounded-full overflow-hidden">
-                    <motion.div
-                      initial={{ width: 0 }}
-                      animate={{ width: `${selectedSkill.skill.proficiency}%` }}
-                      transition={{ duration: 0.6, ease: "easeOut" }}
-                      className={`h-full rounded-full ${getColorStyles(selectedSkill.categoryColor, true).border.replace('border-', 'bg-').replace('/70', '/60')}`}
-                    />
+                    <span className={`px-3 py-1 rounded-full text-sm font-semibold ${
+                      selectedSkill.skill.proficiency === "Expert" ? "bg-green-500/20 text-green-400" :
+                      selectedSkill.skill.proficiency === "Proficient" ? "bg-blue-500/20 text-blue-400" :
+                      "bg-yellow-500/20 text-yellow-400"
+                    }`}>
+                      {selectedSkill.skill.proficiency}
+                    </span>
                   </div>
                 </div>
 
