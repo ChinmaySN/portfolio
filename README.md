@@ -145,7 +145,7 @@ Contributions, issues, and feature requests are welcome!
 ## 📧 Contact
 
 - GitHub: [@ChinmaySN](https://github.com/ChinmaySN)
-- Portfolio: [chinmaysn.vercel.app]
+- Portfolio: [([chinmaysn.vercel.app](https://chinmaysn.vercel.app/))]
 
 ---
 
