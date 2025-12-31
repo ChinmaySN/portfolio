@@ -37,6 +37,9 @@ export function FeaturedProjectsFolders() {
     image: getProjectImage(project, index),
     title: project.title,
     link: project.link,
+    outcome: project.outcome,
+    approach: project.approach,
+    problem: project.problem,
   }));
 
   useEffect(() => {
@@ -68,25 +71,25 @@ export function FeaturedProjectsFolders() {
     <section 
       ref={sectionRef}
       aria-labelledby="featured-projects-heading" 
-      className="w-full bg-theme-primary py-20"
+      className="w-full bg-theme-primary pt-16 pb-8 min-h-screen"
     >
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="max-w-7xl mx-auto px-6 w-full">
         {/* Section Header */}
         <div className="text-center mb-16">
           <h2 id="featured-projects-heading" className="text-4xl md:text-5xl font-bold text-theme-primary mb-4">
             Featured Projects
           </h2>
           <p className="text-lg text-theme-secondary max-w-2xl mx-auto">
-            Scroll to reveal projects. Click on a card to view details.
+            Scroll to reveal projects. Hover to see details. Click to view full showcase.
           </p>
         </div>
 
         {/* 3D Folder */}
-        <div className="flex items-center justify-center" role="region" aria-label="Interactive project showcase">
+        <div className="flex items-center justify-center mt-24" role="region" aria-label="Interactive project showcase">
           <AnimatedFolder
             title="Recent Work"
             projects={folderProjects}
-            className="w-full max-w-2xl"
+            className="w-full max-w-5xl"
             isRevealed={isVisible}
           />
         </div>
