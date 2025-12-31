@@ -40,7 +40,6 @@ export const skills: SkillCategory[] = [
     items: [
       { name: 'Machine Learning', proficiency: 'proficient' },
       { name: 'Deep Learning (CNNs)', proficiency: 'proficient' },
-      { name: 'Computer Vision', proficiency: 'proficient' },
       { name: 'Data Analysis', proficiency: 'proficient' },
     ],
   },

@@ -56,16 +56,13 @@ export function AnimatedFolder({ title, projects, className, isRevealed = false 
       <div
         className={cn(
           "relative flex flex-col items-center justify-center",
-          "p-4 rounded-2xl",
-          "bg-theme-secondary border border-theme",
           "transition-all duration-500 ease-out",
-          isRevealed && "shadow-theme-lg border-theme-accent/30",
           "group",
           className
         )}
         style={{
-          minWidth: "350px",
-          minHeight: "450px",
+          minWidth: "300px",
+          minHeight: "340px",
           perspective: "1500px",
         }}
       >
@@ -74,11 +71,11 @@ export function AnimatedFolder({ title, projects, className, isRevealed = false 
           className="absolute inset-0 rounded-2xl transition-opacity duration-1000"
           style={{
             background: "radial-gradient(circle at 50% 70%, rgb(59 130 246) 0%, transparent 70%)",
-            opacity: isRevealed ? 0.1 : 0,
+            opacity: isRevealed ? 0.04 : 0,
           }}
         />
 
-        <div className="relative flex items-center justify-center mb-3 mt-12" style={{ height: "240px", width: "240px" }}>
+        <div className="relative flex items-center justify-center mb-2 mt-6" style={{ height: "200px", width: "200px" }}>
           {/* Folder back layer - z-index 10 */}
           <div
             className="absolute w-40 h-28 bg-folder-back rounded-xl shadow-lg"
@@ -121,11 +118,12 @@ export function AnimatedFolder({ title, projects, className, isRevealed = false 
                 }}
                 image={project.image}
                 title={project.title}
-                delay={index * 100 + 400}
+                delay={index * 120}
                 isVisible={isRevealed}
                 index={index}
                 onClick={() => handleProjectClick(project, index)}
                 isSelected={hiddenCardId === project.id}
+                link={project.link}
                 outcome={project.outcome}
                 approach={project.approach}
                 problem={project.problem}
@@ -569,19 +567,21 @@ interface ProjectCardProps {
   index: number;
   onClick: () => void;
   isSelected: boolean;
+  link?: string;
   outcome?: string;
   approach?: string;
   problem?: string;
 }
 
 const ProjectCard = forwardRef<HTMLDivElement, ProjectCardProps>(
-  ({ image, title, delay, isVisible, index, onClick, isSelected, outcome, approach, problem }, ref) => {
+  ({ image, title, delay, isVisible, index, onClick, isSelected, link, outcome, approach, problem }, ref) => {
     const [isHovered, setIsHovered] = useState(false);
     
     // Card positioning: spread horizontally when visible
     const cardSpacing = 240; // Increased spacing for larger cards
     const xPosition = (index - 1) * cardSpacing; // -240, 0, 240 for left, center, right
-    const yOffset = -200; // Increased fly up distance for larger cards
+    const yOffset = -240; // Strong upward lift for burst effect
+    const zOffset = 80; // Forward Z movement for depth
     const rotations = [-8, 0, 8]; // Subtle rotation for visual interest
 
     // Extract one sentence each for hover details
@@ -607,10 +607,10 @@ const ProjectCard = forwardRef<HTMLDivElement, ProjectCardProps>(
           width: "220px",
           height: "280px",
           transform: isVisible
-            ? `translateX(${xPosition}px) translateY(${yOffset}px) rotate(${rotations[index]}deg) scale(1)`
-            : "translateX(0px) translateY(0px) rotate(0deg) scale(0.3)",
+            ? `translateX(${xPosition}px) translateY(${yOffset}px) translateZ(${zOffset}px) rotate(${rotations[index]}deg) scale(1)`
+            : "translateX(0px) translateY(0px) translateZ(0px) rotate(0deg) scale(0.3)",
           opacity: isSelected ? 0 : isVisible ? 1 : 0,
-          transition: `all 650ms cubic-bezier(0.34, 1.56, 0.64, 1) ${delay}ms`,
+          transition: `all 650ms cubic-bezier(0.16, 1.4, 0.44, 1) ${delay}ms`,
           zIndex: 20 + index,
           left: "50%",
           top: "50%",
@@ -624,11 +624,13 @@ const ProjectCard = forwardRef<HTMLDivElement, ProjectCardProps>(
         onBlur={() => setIsHovered(false)}
         onClick={(e) => {
           e.stopPropagation();
-          onClick();
+          if (link) {
+            window.open(link, "_blank", "noopener,noreferrer");
+          }
         }}
         tabIndex={0}
         role="button"
-        aria-label={`View ${title} project details`}
+        aria-label={`Open ${title} project in new tab`}
       >
         {/* Card inner container with flip transform */}
         <div
@@ -662,7 +664,7 @@ const ProjectCard = forwardRef<HTMLDivElement, ProjectCardProps>(
               transform: "rotateY(180deg)",
             }}
           >
-            <div className="h-full flex flex-col justify-start space-y-4 text-white overflow-y-auto">
+            <div className="h-full flex flex-col justify-start space-y-3 text-white overflow-hidden">
               <h3 className="text-sm font-bold mb-2 line-clamp-2">{title}</h3>
               
               {outcomeText && (

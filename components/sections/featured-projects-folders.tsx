@@ -68,15 +68,18 @@ export function FeaturedProjectsFolders() {
   }, []);
 
   return (
-    <section 
+    <section
       ref={sectionRef}
-      aria-labelledby="featured-projects-heading" 
-      className="w-full bg-theme-primary pt-16 pb-8 min-h-screen"
+      aria-labelledby="featured-projects-heading"
+      className="w-full bg-theme-primary pt-24 pb-16"
     >
       <div className="max-w-7xl mx-auto px-6 w-full">
-        {/* Section Header */}
-        <div className="text-center mb-16">
-          <h2 id="featured-projects-heading" className="text-4xl md:text-5xl font-bold text-theme-primary mb-4">
+        {/* Header */}
+        <div className="text-center mb-24">
+          <h2
+            id="featured-projects-heading"
+            className="text-4xl md:text-5xl font-bold text-theme-primary mb-4"
+          >
             Featured Projects
           </h2>
           <p className="text-lg text-theme-secondary max-w-2xl mx-auto">
@@ -84,14 +87,16 @@ export function FeaturedProjectsFolders() {
           </p>
         </div>
 
-        {/* 3D Folder */}
-        <div className="flex items-center justify-center mt-24" role="region" aria-label="Interactive project showcase">
-          <AnimatedFolder
-            title="Recent Work"
-            projects={folderProjects}
-            className="w-full max-w-5xl"
-            isRevealed={isVisible}
-          />
+        {/* ANIMATION SANDBOX */}
+        <div className="relative h-[520px]">
+          <div className="absolute bottom-0 left-1/2 -translate-x-1/2">
+            <AnimatedFolder
+              title="Recent Work"
+              projects={folderProjects}
+              className="w-full max-w-5xl"
+              isRevealed={isVisible}
+            />
+          </div>
         </div>
       </div>
     </section>
